@@ -14,7 +14,7 @@ app = Flask(__name__)
 CORS(app)  # Permitir CORS para el frontend
 
 # Configuración de la base de datos
-DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'inventario.db')
+DB_PATH = os.path.join(os.path.dirname(__file__), '..', '..', 'inventario.db')
 
 def get_db_connection():
     """Crea y retorna una conexión a la base de datos"""
@@ -430,7 +430,7 @@ def get_statistics():
 if __name__ == '__main__':
     print("🚀 Iniciando API REST del Sistema de Inventario...")
     print(f"📁 Base de datos: {DB_PATH}")
-    print("🌐 Servidor ejecutándose en: http://localhost:5000")
+    print("🌐 Servidor ejecutándose en: http://localhost:5001")
     print("📚 Documentación de endpoints:")
     print("   GET  /api/health - Verificar estado de la API")
     print("   GET  /api/products - Obtener todos los productos")
@@ -442,4 +442,4 @@ if __name__ == '__main__':
     print("   GET  /api/products/low-stock?threshold=<num> - Productos con bajo stock")
     print("   GET  /api/statistics - Estadísticas del inventario")
     
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5001)
