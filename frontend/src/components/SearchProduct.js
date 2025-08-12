@@ -1,18 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 function SearchProduct({ products, initialSearchTerm = '', initialSearchBy = 'nombre' }) {
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [searchBy, setSearchBy] = useState(initialSearchBy);
   const [searchResults, setSearchResults] = useState([]);
 
-  // Efecto para realizar búsqueda automática si hay término inicial
-  useEffect(() => {
-    if (initialSearchTerm) {
-      handleSearch();
-    }
-  }, [initialSearchTerm, initialSearchBy, handleSearch]);
-
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     if (!searchTerm.trim()) {
       setSearchResults([]);
       return;
@@ -34,7 +27,14 @@ function SearchProduct({ products, initialSearchTerm = '', initialSearchBy = 'no
     });
 
     setSearchResults(filtered);
-  };
+  }, [searchTerm, searchBy, products]);
+
+  // Efecto para realizar búsqueda automática si hay término inicial
+  useEffect(() => {
+    if (initialSearchTerm) {
+      handleSearch();
+    }
+  }, [initialSearchTerm, initialSearchBy, handleSearch]);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
