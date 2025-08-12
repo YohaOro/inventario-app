@@ -109,6 +109,7 @@ function ProductList({
               <td>
                 <TruncatedDescription 
                   description={product.descripcion}
+                  productName={product.nombre}
                 />
               </td>
               <td>
