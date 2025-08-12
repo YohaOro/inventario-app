@@ -33,10 +33,10 @@ graph TB
     
     subgraph "⚙️ BACKEND (Flask)"
         K[Flask API] --> L[Routes]
-        L --> M[/api/health]
-        L --> N[/api/products]
-        L --> O[/api/products/search]
-        L --> P[/api/statistics]
+        L --> M[Health Endpoint]
+        L --> N[Products Endpoint]
+        L --> O[Search Endpoint]
+        L --> P[Statistics Endpoint]
         
         K --> Q[Database Layer]
         K --> R[CORS Middleware]
