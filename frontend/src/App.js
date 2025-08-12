@@ -18,7 +18,6 @@ function App() {
   // Estado de paginación
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(10);
-  const [hasMoreProducts, setHasMoreProducts] = useState(true);
   
   // Estado para búsqueda desde descripción truncada
   const [searchFromDescription, setSearchFromDescription] = useState({ term: '', by: 'nombre' });

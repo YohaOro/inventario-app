@@ -10,7 +10,7 @@ function SearchProduct({ products, initialSearchTerm = '', initialSearchBy = 'no
     if (initialSearchTerm) {
       handleSearch();
     }
-  }, [initialSearchTerm, initialSearchBy]);
+  }, [initialSearchTerm, initialSearchBy, handleSearch]);
 
   const handleSearch = () => {
     if (!searchTerm.trim()) {
