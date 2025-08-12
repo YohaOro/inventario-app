@@ -7,7 +7,7 @@ import sqlite3
 import os
 
 # Obtener la ruta absoluta a la raíz del proyecto
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 DB_PATH = os.path.join(PROJECT_ROOT, 'inventario.db')
 
 def crear_tabla():
