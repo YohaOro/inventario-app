@@ -12,6 +12,103 @@ Una aplicación completa de gestión de inventario con backend en Flask y fronte
 - **Reportes de bajo stock**
 - **Estadísticas del inventario**
 
+## 🏗️ Arquitectura del Proyecto
+
+### 📊 Diagrama General de Arquitectura
+
+```mermaid
+graph TB
+    subgraph "⚛️ FRONTEND (React)"
+        A[React App] --> B[Components]
+        B --> C[ProductList]
+        B --> D[AddProduct]
+        B --> E[EditProduct]
+        B --> F[SearchProduct]
+        B --> G[LowStockReport]
+        
+        A --> H[React Router]
+        A --> I[State Management]
+        A --> J[API Calls]
+    end
+    
+    subgraph "⚙️ BACKEND (Flask)"
+        K[Flask API] --> L[Routes]
+        L --> M[/api/health]
+        L --> N[/api/products]
+        L --> O[/api/products/search]
+        L --> P[/api/statistics]
+        
+        K --> Q[Database Layer]
+        K --> R[CORS Middleware]
+    end
+    
+    subgraph "🗄️ DATABASE"
+        S[SQLite Database]
+        S --> T[Productos Table]
+        T --> U[id, nombre, descripcion, cantidad, precio, categoria]
+    end
+    
+    subgraph "🚀 INFRASTRUCTURA"
+        V[Vercel Platform]
+        V --> W[Auto-deploy from Git]
+        V --> X[SSL Certificate]
+        V --> Y[CDN Global]
+    end
+    
+    J --> K
+    Q --> S
+    
+    style A fill:#61dafb
+    style K fill:#3776ab
+    style S fill:#003b57
+    style V fill:#000000
+```
+
+### 🔗 Flujo de Datos
+
+```mermaid
+sequenceDiagram
+    participant U as Usuario
+    participant F as Frontend (React)
+    participant B as Backend (Flask)
+    participant D as SQLite DB
+    
+    U->>F: Interactúa con la UI
+    F->>B: API Request (GET/POST/PUT/DELETE)
+    B->>D: Query Database
+    D-->>B: Return Data
+    B-->>F: JSON Response
+    F-->>U: Update UI
+```
+
+### 📦 Stack Tecnológico
+
+```mermaid
+graph LR
+    subgraph "📦 FRONTEND DEPENDENCIES"
+        A[React 18] --> B[React DOM]
+        A --> C[React Scripts]
+        A --> D[Create React App]
+    end
+    
+    subgraph "🐍 BACKEND DEPENDENCIES"
+        E[Flask 2.3.3] --> F[Flask-CORS]
+        E --> G[SQLite3]
+        E --> H[Colorama]
+    end
+    
+    subgraph "🔧 BUILD TOOLS"
+        I[Node.js] --> J[npm]
+        J --> K[Webpack]
+        L[Python 3.12] --> M[pip]
+    end
+    
+    style A fill:#61dafb
+    style E fill:#3776ab
+    style I fill:#339933
+    style L fill:#3776ab
+```
+
 ## 🏗️ Estructura del Proyecto
 
 ```
@@ -85,6 +182,18 @@ La aplicación estará disponible en: http://localhost:3000
 - **Frontend:** React, JavaScript, CSS
 - **Base de Datos:** SQLite
 - **APIs:** RESTful API
+
+## 🌐 Despliegue en Producción
+
+La aplicación está desplegada en **Vercel** y es accesible en:
+**https://inventario-app-git-deploy-yohaoros-projects.vercel.app/**
+
+### Características del Despliegue:
+- ✅ **Despliegue automático** desde GitHub
+- ✅ **SSL gratuito** incluido
+- ✅ **CDN global** para mejor rendimiento
+- ✅ **Base de datos SQLite** integrada
+- ✅ **API REST** completamente funcional
 
 ## 📝 Licencia
 
