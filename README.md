@@ -197,4 +197,46 @@ La aplicación está desplegada en **Vercel** y es accesible en:
 
 ## 📝 Licencia
 
-Este proyecto está bajo la Licencia MIT. 
+Este proyecto está bajo la **Licencia MIT**. Ver archivo [LICENSE](LICENSE) para más detalles.
+
+### ¿Qué significa la Licencia MIT?
+
+La Licencia MIT es una licencia de software **muy permisiva** que permite:
+
+- ✅ **Usar** el código para cualquier propósito
+- ✅ **Modificar** el código como quieras  
+- ✅ **Distribuir** el código modificado
+- ✅ **Usar comercialmente** (vender, usar en empresas)
+- ✅ **Integrar** en software propietario
+
+**Solo requiere:** Mantener el aviso de copyright original.
+
+### Texto Completo de la Licencia MIT
+
+```
+MIT License
+
+Copyright (c) 2024 YohaOro
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+**¿Te gusta este proyecto?** ⭐ ¡Dale una estrella en GitHub! 
