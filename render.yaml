@@ -1,37 +1,10 @@
 services:
-  # Backend API (Python/Flask)
-  - type: web
-    name: inventario-backend
-    env: python
-    plan: starter
-    buildCommand: pip install -r backend/requirements.txt
-    startCommand: cd backend && python api.py
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.9.16
-      - key: DATABASE_URL
-        fromDatabase:
-          name: inventario-db
-          property: connectionString
-      - key: FLASK_ENV
-        value: production
-      - key: FLASK_DEBUG
-        value: false
-
-  # Frontend (React)
+  # Frontend (React) - Solo el frontend por ahora
   - type: web
     name: inventario-frontend
     env: static
-    plan: starter
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: frontend/build
     envVars:
       - key: REACT_APP_API_URL
         value: https://inventario-backend.onrender.com
-
-databases:
-  # Base de datos PostgreSQL
-  - name: inventario-db
-    databaseName: inventario
-    user: inventario_user
-    plan: free
