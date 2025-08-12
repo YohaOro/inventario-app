@@ -4,7 +4,7 @@ API REST para el Sistema de Gestión de Inventario
 Proporciona endpoints para todas las operaciones CRUD de productos
 """
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import sqlite3
 import os
@@ -426,6 +426,40 @@ def get_statistics():
             'success': False,
             'error': str(e)
         }), 500
+
+# Configuración de assets estáticos
+@app.route('/assets/<path:filename>')
+def serve_asset(filename):
+    """Sirve archivos estáticos desde la carpeta assets"""
+    try:
+        # Ruta desde el directorio backend hacia la carpeta assets
+        assets_path = os.path.join(os.path.dirname(__file__), '..', 'assets')
+        print(f"🔍 Buscando asset: {filename} en {assets_path}")
+        return send_from_directory(assets_path, filename)
+    except FileNotFoundError:
+        return {'error': 'Asset no encontrado'}, 404
+
+@app.route('/assets/icons/<path:filename>')
+def serve_icon(filename):
+    """Sirve iconos específicamente"""
+    try:
+        # Ruta desde el directorio backend hacia la carpeta assets/icons
+        icons_path = os.path.join(os.path.dirname(__file__), '..', 'assets', 'icons')
+        print(f"🔍 Buscando icono: {filename} en {icons_path}")
+        return send_from_directory(icons_path, filename)
+    except FileNotFoundError:
+        return {'error': 'Icono no encontrado'}, 404
+
+@app.route('/assets/images/<path:filename>')
+def serve_image(filename):
+    """Sirve imágenes específicamente"""
+    try:
+        # Ruta desde el directorio backend hacia la carpeta assets/images
+        images_path = os.path.join(os.path.dirname(__file__), '..', 'assets', 'images')
+        print(f"🔍 Buscando imagen: {filename} en {images_path}")
+        return send_from_directory(images_path, filename)
+    except FileNotFoundError:
+        return {'error': 'Imagen no encontrada'}, 404
 
 if __name__ == '__main__':
     print("🚀 Iniciando API REST del Sistema de Inventario...")

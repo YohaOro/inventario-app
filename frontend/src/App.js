@@ -14,6 +14,14 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [statistics, setStatistics] = useState(null);
+  
+  // Estado de paginación
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(10);
+  const [hasMoreProducts, setHasMoreProducts] = useState(true);
+  
+  // Estado para búsqueda desde descripción truncada
+  const [searchFromDescription, setSearchFromDescription] = useState({ term: '', by: 'nombre' });
 
   // Cargar productos desde la API
   useEffect(() => {
@@ -44,12 +52,50 @@ function App() {
     }
   };
 
+  // Función para obtener productos paginados
+  const getPaginatedProducts = () => {
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    
+    // Ordenar productos alfabéticamente por nombre
+    const sortedProducts = [...products].sort((a, b) => 
+      a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })
+    );
+    
+    return sortedProducts.slice(startIndex, endIndex);
+  };
+
+  // Función para ir a la página anterior
+  const goToPreviousPage = () => {
+    setCurrentPage(prev => Math.max(prev - 1, 1));
+  };
+
+  // Función para ir a la página siguiente
+  const goToNextPage = () => {
+    const maxPage = Math.ceil(products.length / productsPerPage);
+    setCurrentPage(prev => Math.min(prev + 1, maxPage));
+  };
+
+  // Función para ir a una página específica
+  const goToPage = (pageNumber) => {
+    const maxPage = Math.ceil(products.length / productsPerPage);
+    if (pageNumber >= 1 && pageNumber <= maxPage) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
+  // Función para resetear paginación
+  const resetPagination = () => {
+    setCurrentPage(1);
+  };
+
   const addProduct = async (newProduct) => {
     try {
       setLoading(true);
       const response = await apiService.createProduct(newProduct);
       await loadProducts(); // Recargar productos
       await loadStatistics(); // Recargar estadísticas
+      resetPagination(); // Resetear paginación
       setActiveTab('list');
       return { success: true, message: response.message };
     } catch (err) {
@@ -66,6 +112,7 @@ function App() {
       await apiService.updateProduct(id, updateData);
       await loadProducts(); // Recargar productos
       await loadStatistics(); // Recargar estadísticas
+      resetPagination(); // Resetear paginación
       setEditingProduct(null);
       setActiveTab('list');
       return { success: true, message: 'Producto actualizado exitosamente' };
@@ -82,6 +129,7 @@ function App() {
       await apiService.deleteProduct(id);
       await loadProducts(); // Recargar productos
       await loadStatistics(); // Recargar estadísticas
+      resetPagination(); // Resetear paginación
       return { success: true, message: 'Producto eliminado exitosamente' };
     } catch (err) {
       return { success: false, message: 'Error al eliminar producto: ' + err.message };
@@ -93,6 +141,12 @@ function App() {
   const startEdit = (product) => {
     setEditingProduct(product);
     setActiveTab('edit');
+  };
+
+  // Función para buscar producto desde descripción truncada
+  const searchProductFromDescription = (productName) => {
+    setSearchFromDescription({ term: productName, by: 'nombre' });
+    setActiveTab('search');
   };
 
   const renderContent = () => {
@@ -125,10 +179,17 @@ function App() {
       case 'list':
         return (
           <ProductList 
-            products={products} 
+            products={getPaginatedProducts()} 
             onEdit={startEdit}
             onDelete={deleteProduct}
             statistics={statistics}
+            currentPage={currentPage}
+            totalProducts={products.length}
+            productsPerPage={productsPerPage}
+            onPreviousPage={goToPreviousPage}
+            onNextPage={goToNextPage}
+            onGoToPage={goToPage}
+            onSearchProduct={searchProductFromDescription}
           />
         );
       case 'add':
@@ -142,7 +203,13 @@ function App() {
           />
         );
       case 'search':
-        return <SearchProduct products={products} />;
+        return (
+          <SearchProduct 
+            products={products} 
+            initialSearchTerm={searchFromDescription.term}
+            initialSearchBy={searchFromDescription.by}
+          />
+        );
       case 'report':
         return <LowStockReport products={products} />;
       default:
@@ -156,48 +223,47 @@ function App() {
         <h1>🏪 Sistema de Gestión de Inventario</h1>
         <p>Gestiona tu inventario de manera eficiente y organizada</p>
         {statistics && (
-          <div style={{ 
-            backgroundColor: 'rgba(255,255,255,0.1)', 
-            padding: '10px 20px', 
-            borderRadius: '8px',
-            marginTop: '15px'
-          }}>
-            <span style={{ marginRight: '20px' }}>📦 Total: {statistics.total_products} productos</span>
-            <span style={{ marginRight: '20px' }}>💰 Valor: ${statistics.total_value?.toLocaleString() || 0}</span>
+          <div className="header-stats">
+            <span>📦 Total: {statistics.total_products} productos</span>
+            <span>💰 Valor: ${statistics.total_value?.toLocaleString() || 0}</span>
             <span>⚠️ Bajo stock: {statistics.low_stock_count}</span>
           </div>
         )}
       </div>
 
-      <div className="container">
-        <div className="nav-tabs">
-          <button 
-            className={`nav-tab ${activeTab === 'list' ? 'active' : ''}`}
-            onClick={() => setActiveTab('list')}
-          >
-            📋 Lista de Productos
-          </button>
-          <button 
-            className={`nav-tab ${activeTab === 'add' ? 'active' : ''}`}
-            onClick={() => setActiveTab('add')}
-          >
-            ➕ Agregar Producto
-          </button>
-          <button 
-            className={`nav-tab ${activeTab === 'search' ? 'active' : ''}`}
-            onClick={() => setActiveTab('search')}
-          >
-            🔍 Buscar Producto
-          </button>
-          <button 
-            className={`nav-tab ${activeTab === 'report' ? 'active' : ''}`}
-            onClick={() => setActiveTab('report')}
-          >
-            📊 Reporte Bajo Stock
-          </button>
+      <div className="main-layout">
+        <div className="sidebar">
+          <div className="nav-tabs">
+            <button 
+              className={`nav-tab ${activeTab === 'list' ? 'active' : ''}`}
+              onClick={() => setActiveTab('list')}
+            >
+              📋 Lista de Productos
+            </button>
+            <button 
+              className={`nav-tab ${activeTab === 'add' ? 'active' : ''}`}
+              onClick={() => setActiveTab('add')}
+            >
+              ➕ Agregar Producto
+            </button>
+            <button 
+              className={`nav-tab ${activeTab === 'search' ? 'active' : ''}`}
+              onClick={() => setActiveTab('search')}
+            >
+              🔍 Buscar Producto
+            </button>
+            <button 
+              className={`nav-tab ${activeTab === 'report' ? 'active' : ''}`}
+              onClick={() => setActiveTab('report')}
+            >
+              📊 Reporte Bajo Stock
+            </button>
+          </div>
         </div>
 
-        {renderContent()}
+        <div className="content-area">
+          {renderContent()}
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,19 @@
 import React, { useState } from 'react';
+import TruncatedDescription from './TruncatedDescription';
 
-function ProductList({ products, onEdit, onDelete, statistics }) {
+function ProductList({ 
+  products, 
+  onEdit, 
+  onDelete, 
+  statistics, 
+  currentPage, 
+  totalProducts, 
+  productsPerPage,
+  onPreviousPage,
+  onNextPage,
+  onGoToPage,
+  onSearchProduct
+}) {
   const [deletingId, setDeletingId] = useState(null);
   const [message, setMessage] = useState(null);
 
@@ -81,7 +94,6 @@ function ProductList({ products, onEdit, onDelete, statistics }) {
       <table className="table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Nombre</th>
             <th>Descripción</th>
             <th>Cantidad</th>
@@ -93,9 +105,12 @@ function ProductList({ products, onEdit, onDelete, statistics }) {
         <tbody>
           {products.map((product) => (
             <tr key={product.id}>
-              <td>{product.id}</td>
               <td><strong>{product.nombre}</strong></td>
-              <td>{product.descripcion}</td>
+              <td>
+                <TruncatedDescription 
+                  description={product.descripcion}
+                />
+              </td>
               <td>
                 <span style={{ 
                   color: product.cantidad < 10 ? '#dc3545' : '#28a745',
@@ -114,7 +129,7 @@ function ProductList({ products, onEdit, onDelete, statistics }) {
                   onClick={() => onEdit(product)}
                   style={{ marginRight: '8px', padding: '8px 16px' }}
                 >
-                  ✏️ Editar
+                  Editar
                 </button>
                 <button 
                   className="btn btn-danger" 
@@ -122,13 +137,96 @@ function ProductList({ products, onEdit, onDelete, statistics }) {
                   disabled={deletingId === product.id}
                   style={{ padding: '8px 16px' }}
                 >
-                  {deletingId === product.id ? '🔄 Eliminando...' : '🗑️ Eliminar'}
+                  {deletingId === product.id ? '🔄 Eliminando...' : 'Eliminar'}
                 </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      
+      {/* Información de paginación */}
+      <div className="pagination-info">
+        
+        {/* Controles de paginación */}
+        <div className="pagination-controls">
+          {/* Botón Anterior */}
+          <button 
+            className="btn btn-secondary pagination-btn"
+            onClick={onPreviousPage}
+            disabled={currentPage === 1}
+          >
+            ⬅️ Anterior
+          </button>
+          
+          {/* Números de página */}
+          <div className="page-numbers">
+            {(() => {
+              const totalPages = Math.ceil(totalProducts / productsPerPage);
+              const pages = [];
+              
+              // Mostrar primera página
+              if (currentPage > 1) {
+                pages.push(
+                  <button 
+                    key={1} 
+                    className="page-number"
+                    onClick={() => onGoToPage(1)}
+                  >
+                    1
+                  </button>
+                );
+                
+                if (currentPage > 3) {
+                  pages.push(<span key="dots1" className="page-dots">...</span>);
+                }
+              }
+              
+              // Mostrar páginas alrededor de la actual
+              for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                if (i === 1 || i === totalPages) continue;
+                pages.push(
+                  <button 
+                    key={i} 
+                    className={`page-number ${i === currentPage ? 'active' : ''}`}
+                    onClick={() => onGoToPage(i)}
+                  >
+                    {i}
+                  </button>
+                );
+              }
+              
+              // Mostrar última página
+              if (currentPage < totalPages) {
+                if (currentPage < totalPages - 2) {
+                  pages.push(<span key="dots2" className="page-dots">...</span>);
+                }
+                
+                pages.push(
+                  <button 
+                    key={totalPages} 
+                    className="page-number"
+                    onClick={() => onGoToPage(totalPages)}
+                  >
+                    {totalPages}
+                  </button>
+                );
+              }
+              
+              return pages;
+            })()}
+          </div>
+          
+          {/* Botón Siguiente */}
+          <button 
+            className="btn btn-secondary pagination-btn"
+            onClick={onNextPage}
+            disabled={currentPage === Math.ceil(totalProducts / productsPerPage)}
+          >
+            Siguiente ➡️
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

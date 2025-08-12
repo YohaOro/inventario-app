@@ -81,3 +81,19 @@ jspm_packages/
 
 # dotenv environment variables file
 .env
+
+# Assets - Solo permitir archivos de imagen e iconos
+assets/**/*.tmp
+assets/**/*.psd
+assets/**/*.ai
+assets/**/*.sketch
+assets/**/*.fig
+
+# Permitir solo estos formatos de imagen/icono
+!assets/**/*.png
+!assets/**/*.jpg
+!assets/**/*.jpeg
+!assets/**/*.gif
+!assets/**/*.svg
+!assets/**/*.ico
+!assets/**/*.webp

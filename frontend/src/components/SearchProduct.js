@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function SearchProduct({ products }) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchBy, setSearchBy] = useState('nombre');
+function SearchProduct({ products, initialSearchTerm = '', initialSearchBy = 'nombre' }) {
+  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
+  const [searchBy, setSearchBy] = useState(initialSearchBy);
   const [searchResults, setSearchResults] = useState([]);
+
+  // Efecto para realizar búsqueda automática si hay término inicial
+  useEffect(() => {
+    if (initialSearchTerm) {
+      handleSearch();
+    }
+  }, [initialSearchTerm, initialSearchBy]);
 
   const handleSearch = () => {
     if (!searchTerm.trim()) {
