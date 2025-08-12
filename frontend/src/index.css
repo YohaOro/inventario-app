@@ -113,6 +113,47 @@ code {
   background-color: #f8f9fa;
 }
 
+/* Centrar columnas específicas: Cantidad, Precio, Categoría y Acciones */
+.table th:nth-child(3),
+.table td:nth-child(3),
+.table th:nth-child(4),
+.table td:nth-child(4),
+.table th:nth-child(5),
+.table td:nth-child(5),
+.table th:nth-child(6),
+.table td:nth-child(6) {
+  text-align: center;
+}
+
+/* Ancho fijo para la columna de descripción */
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 300px;
+  max-width: 300px;
+  min-width: 300px;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .table th:nth-child(2),
+  .table td:nth-child(2) {
+    width: 200px;
+    max-width: 200px;
+    min-width: 200px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 8px;
+    font-size: 14px;
+  }
+}
+
 .header {
   text-align: center;
   color: white;

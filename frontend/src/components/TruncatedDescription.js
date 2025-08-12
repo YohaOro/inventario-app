@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TruncatedDescription = ({ description }) => {
-  const maxLength = 30; // Longitud máxima antes de truncar
+  const maxLength = 40; // Longitud máxima antes de truncar
   
   // Si no hay descripción, mostrar mensaje
   if (!description) {
