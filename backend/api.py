@@ -6,54 +6,66 @@ Proporciona endpoints para todas las operaciones CRUD de productos
 
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-import psycopg2
-import psycopg2.extras
+import sqlite3
 import os
 from datetime import datetime
-from urllib.parse import urlparse
 
 app = Flask(__name__)
 CORS(app)  # Permitir CORS para el frontend
 
-# Configuración de la base de datos
-DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite:///inventario.db')
+# Configuración de la base de datos SQLite
+DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'inventario.db')
 
 def get_db_connection():
-    """Crea y retorna una conexión a la base de datos"""
-    if DATABASE_URL.startswith('postgres'):
-        # Parsear la URL de PostgreSQL
-        url = urlparse(DATABASE_URL)
-        conn = psycopg2.connect(
-            host=url.hostname,
-            port=url.port,
-            database=url.path[1:],
-            user=url.username,
-            password=url.password
-        )
-        return conn
-    else:
-        # Fallback a SQLite para desarrollo local
-        import sqlite3
-        DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'inventario.db')
-        conn = sqlite3.connect(DB_PATH)
-        conn.row_factory = sqlite3.Row
-        return conn
+    """Crea y retorna una conexión a la base de datos SQLite"""
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
 
 def dict_from_row(row):
-    """Convierte una fila de SQLite o PostgreSQL en un diccionario"""
-    if hasattr(row, 'keys'):
-        # SQLite
-        return dict(zip(row.keys(), row))
-    else:
-        # PostgreSQL
-        return dict(row)
+    """Convierte una fila de SQLite en un diccionario"""
+    return dict(zip(row.keys(), row))
+
+def init_database():
+    """Inicializa la base de datos si no existe"""
+    if not os.path.exists(DB_PATH):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        # Crear tabla de productos
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS productos (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nombre TEXT NOT NULL,
+                descripcion TEXT,
+                cantidad INTEGER DEFAULT 0,
+                precio REAL DEFAULT 0.0,
+                categoria TEXT DEFAULT 'Sin categoría',
+                fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        
+        # Insertar algunos productos de ejemplo
+        cursor.execute('''
+            INSERT OR IGNORE INTO productos (nombre, descripcion, cantidad, precio, categoria)
+            VALUES 
+                ('Laptop Dell XPS 13', 'Laptop ultrabook de 13 pulgadas', 5, 1299.99, 'Tecnología'),
+                ('Mouse inalámbrico Logitech', 'Mouse ergonómico con sensor óptico', 15, 29.99, 'Accesorios'),
+                ('Monitor Samsung 24"', 'Monitor LED Full HD', 8, 199.99, 'Tecnología')
+        ''')
+        
+        conn.commit()
+        conn.close()
+
+# Inicializar base de datos al arrancar
+init_database()
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
     """Endpoint de verificación de salud de la API"""
     return jsonify({
         'status': 'healthy',
-        'message': 'API de Inventario funcionando correctamente',
+        'message': 'API de Inventario funcionando correctamente con SQLite',
         'timestamp': datetime.now().isoformat()
     })
 
