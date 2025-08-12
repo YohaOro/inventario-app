@@ -6,25 +6,47 @@ Proporciona endpoints para todas las operaciones CRUD de productos
 
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-import sqlite3
+import psycopg2
+import psycopg2.extras
 import os
 from datetime import datetime
+from urllib.parse import urlparse
 
 app = Flask(__name__)
 CORS(app)  # Permitir CORS para el frontend
 
 # Configuración de la base de datos
-DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'inventario.db')
+DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite:///inventario.db')
 
 def get_db_connection():
     """Crea y retorna una conexión a la base de datos"""
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row  # Para acceder a columnas por nombre
-    return conn
+    if DATABASE_URL.startswith('postgres'):
+        # Parsear la URL de PostgreSQL
+        url = urlparse(DATABASE_URL)
+        conn = psycopg2.connect(
+            host=url.hostname,
+            port=url.port,
+            database=url.path[1:],
+            user=url.username,
+            password=url.password
+        )
+        return conn
+    else:
+        # Fallback a SQLite para desarrollo local
+        import sqlite3
+        DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'inventario.db')
+        conn = sqlite3.connect(DB_PATH)
+        conn.row_factory = sqlite3.Row
+        return conn
 
 def dict_from_row(row):
-    """Convierte una fila de SQLite en un diccionario"""
-    return dict(zip(row.keys(), row))
+    """Convierte una fila de SQLite o PostgreSQL en un diccionario"""
+    if hasattr(row, 'keys'):
+        # SQLite
+        return dict(zip(row.keys(), row))
+    else:
+        # PostgreSQL
+        return dict(row)
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
