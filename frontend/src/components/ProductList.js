@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DynamicTable from './DynamicTable';
 import DescriptionModal from './DescriptionModal';
+import DeleteConfirmationModal from './DeleteConfirmationModal';
 import './TableStyles.css';
 
 const ProductList = React.memo(({ 
@@ -16,25 +17,80 @@ const ProductList = React.memo(({
   onGoToPage,
   onSearchProduct
 }) => {
+  console.log('ProductList renderizado con', products?.length, 'productos');
+  
+  // Debug: Monitorear re-renders
+  useEffect(() => {
+    console.log('ProductList se montó/re-renderizó');
+  });
   const [deletingId, setDeletingId] = useState(null);
   const [message, setMessage] = useState(null);
   const [descriptionModal, setDescriptionModal] = useState({ isOpen: false, description: '', productName: '' });
+  const [deleteModal, setDeleteModal] = useState({ 
+    isOpen: false, 
+    productId: null, 
+    productName: '',
+    showSuccess: false
+  });
 
-  const handleDelete = async (id) => {
-    if (window.confirm('¿Estás seguro de que quieres eliminar este producto?')) {
-      setDeletingId(id);
-      try {
-        const result = await onDelete(id);
-        setMessage(result);
-        setTimeout(() => setMessage(null), 3000);
-      } catch (error) {
-        setMessage({ success: false, message: 'Error al eliminar producto' });
-        setTimeout(() => setMessage(null), 3000);
-      } finally {
-        setDeletingId(null);
-      }
+  const handleDelete = async (product) => {
+    console.log('=== handleDelete INICIADO ===');
+    console.log('Producto recibido:', product);
+    
+    const productId = product.id;
+    const productName = product.nombre;
+    
+    console.log('ID extraído:', productId);
+    console.log('Nombre extraído:', productName);
+    
+    // Solo abrir modal de confirmación
+    const newModalState = {
+      isOpen: true,
+      productId: productId,
+      productName: productName,
+      showSuccess: false
+    };
+    
+    console.log('Estableciendo modal state:', newModalState);
+    setDeleteModal(newModalState);
+    console.log('=== handleDelete COMPLETADO ===');
+  };
+
+  const confirmDelete = async () => {
+    const { productId } = deleteModal;
+    setDeletingId(productId);
+    
+    try {
+      const result = await onDelete(productId);
+      
+      console.log('Producto eliminado exitosamente');
+      
+      // Cerrar modal y mostrar mensaje de éxito
+      setDeleteModal({ isOpen: false, productId: null, productName: '', showSuccess: false });
+      setMessage({ success: true, message: `Producto "${deleteModal.productName}" eliminado exitosamente` });
+      setTimeout(() => setMessage(null), 3000);
+      
+    } catch (error) {
+      console.error('Error al eliminar producto:', error);
+      setMessage({ success: false, message: 'Error al eliminar producto' });
+      setTimeout(() => setMessage(null), 3000);
+    } finally {
+      setDeletingId(null);
     }
   };
+
+  const closeDeleteModal = () => {
+    console.log('closeDeleteModal llamado');
+    setDeleteModal({ isOpen: false, productId: null, productName: '', showSuccess: false });
+    setDeletingId(null);
+  };
+
+
+
+  // Debug: Monitorear cambios en deleteModal
+  useEffect(() => {
+    console.log('deleteModal state cambió:', deleteModal);
+  }, [deleteModal]);
 
   if (!products || products.length === 0) {
     return (
@@ -169,7 +225,7 @@ const ProductList = React.memo(({
         ]}
         showActions={true}
         onEdit={onEdit}
-        onDelete={(item) => handleDelete(item.id)}
+        onDelete={handleDelete}
         emptyMessage="No hay productos registrados"
         className="products-table"
       />
@@ -263,6 +319,16 @@ const ProductList = React.memo(({
         onClose={() => setDescriptionModal({ isOpen: false, description: '', productName: '' })}
         description={descriptionModal.description}
         productName={descriptionModal.productName}
+      />
+
+      {/* Modal de Confirmación de Eliminación */}
+      <DeleteConfirmationModal
+        isOpen={deleteModal.isOpen}
+        onClose={closeDeleteModal}
+        onConfirm={confirmDelete}
+        productName={deleteModal.productName}
+        isDeleting={deletingId !== null}
+        showSuccess={deleteModal.showSuccess}
       />
     </div>
   );

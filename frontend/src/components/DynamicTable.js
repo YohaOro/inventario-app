@@ -134,7 +134,7 @@ const DynamicTable = ({
                           </TooltipPortal>
                         )}
                         {onDelete && (
-                          <TooltipPortal content="Eliminar producto" position="top">
+                          <TooltipPortal content="Eliminar producto permanentemente" position="top">
                             <button 
                               className="action-btn delete-btn"
                               onClick={(e) => {
