@@ -1,7 +1,7 @@
 // Configuración de la API para diferentes entornos
 const config = {
   development: {
-    apiUrl: '/api' // API Routes locales
+    apiUrl: 'http://localhost:5001/api' // Backend Flask local
   },
   production: {
     apiUrl: '/api' // API Routes en Vercel
