@@ -5,6 +5,7 @@ import AddProduct from './components/AddProduct';
 import EditProduct from './components/EditProduct';
 import SearchProduct from './components/SearchProduct';
 import LowStockReport from './components/LowStockReport';
+
 import apiService from './services/api';
 
 function App() {

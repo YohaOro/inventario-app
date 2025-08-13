@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import Tooltip from './Tooltip';
+import TooltipPortal from './TooltipPortal';
 import CategoryBadge from './CategoryBadge';
 import './TableStyles.css';
 import TruncatedDescription from './TruncatedDescription';
@@ -125,7 +125,7 @@ const ProductList = React.memo(({
                 <CategoryBadge category={product.categoria} size="small" />
               </td>
               <td>
-                <Tooltip content="Editar producto">
+                <TooltipPortal content="Editar producto">
                   <button 
                     className="btn btn-secondary" 
                     onClick={() => onEdit(product)}
@@ -133,8 +133,8 @@ const ProductList = React.memo(({
                   >
                     ✏️ 
                   </button>
-                </Tooltip>
-                <Tooltip content="Eliminar producto">
+                </TooltipPortal>
+                <TooltipPortal content="Eliminar producto">
                   <button 
                     className="btn btn-danger" 
                     onClick={() => handleDelete(product.id)}
@@ -143,7 +143,7 @@ const ProductList = React.memo(({
                   >
                     {deletingId === product.id ? '🔄 Eliminando...' : '🗑️'}
                   </button>
-                </Tooltip>
+                </TooltipPortal>
               </td>
             </tr>
           ))}
@@ -156,7 +156,7 @@ const ProductList = React.memo(({
         {/* Controles de paginación */}
         <div className="pagination-controls">
           {/* Botón Anterior */}
-                      <Tooltip content="Ir a la página anterior">
+                      <TooltipPortal content="Ir a la página anterior">
               <button 
                 className="btn btn-secondary pagination-btn"
                 onClick={onPreviousPage}
@@ -164,7 +164,7 @@ const ProductList = React.memo(({
               >
                 ⬅️ Anterior
               </button>
-            </Tooltip>
+            </TooltipPortal>
           
           {/* Números de página */}
           <div className="page-numbers">
@@ -225,7 +225,7 @@ const ProductList = React.memo(({
           </div>
           
           {/* Botón Siguiente */}
-                      <Tooltip content="Ir a la página siguiente">
+                      <TooltipPortal content="Ir a la página siguiente">
               <button 
                 className="btn btn-secondary pagination-btn"
                 onClick={onNextPage}
@@ -233,7 +233,7 @@ const ProductList = React.memo(({
               >
                 Siguiente ➡️
               </button>
-            </Tooltip>
+            </TooltipPortal>
         </div>
       </div>
     </div>

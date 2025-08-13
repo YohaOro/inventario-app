@@ -1,54 +1,53 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import './Tooltip.css';
 
-const Tooltip = ({ children, content, position = 'top' }) => {
+const TooltipPortal = ({ children, content, position = 'top' }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [tooltipStyle, setTooltipStyle] = useState({});
   const containerRef = useRef(null);
 
-  const showTooltip = (event) => {
+  const showTooltip = () => {
     console.log('Tooltip show:', content); // Debug
     
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
       
       let style = {};
       
       switch (position) {
         case 'top':
           style = {
-            left: rect.left + scrollLeft + rect.width / 2,
-            top: rect.top + scrollTop - 8,
+            left: rect.left + rect.width / 2,
+            top: rect.top - 8,
             transform: 'translateX(-50%)'
           };
           break;
         case 'bottom':
           style = {
-            left: rect.left + scrollLeft + rect.width / 2,
-            top: rect.bottom + scrollTop + 8,
+            left: rect.left + rect.width / 2,
+            top: rect.bottom + 8,
             transform: 'translateX(-50%)'
           };
           break;
         case 'left':
           style = {
-            left: rect.left + scrollLeft - 8,
-            top: rect.top + scrollTop + rect.height / 2,
+            left: rect.left - 8,
+            top: rect.top + rect.height / 2,
             transform: 'translateY(-50%)'
           };
           break;
         case 'right':
           style = {
-            left: rect.right + scrollLeft + 8,
-            top: rect.top + scrollTop + rect.height / 2,
+            left: rect.right + 8,
+            top: rect.top + rect.height / 2,
             transform: 'translateY(-50%)'
           };
           break;
         default:
           style = {
-            left: rect.left + scrollLeft + rect.width / 2,
-            top: rect.top + scrollTop - 8,
+            left: rect.left + rect.width / 2,
+            top: rect.top - 8,
             transform: 'translateX(-50%)'
           };
       }
@@ -64,6 +63,21 @@ const Tooltip = ({ children, content, position = 'top' }) => {
     setIsVisible(false);
   };
 
+  // Renderizar el tooltip usando Portal
+  const renderTooltip = () => {
+    if (!isVisible) return null;
+
+    const tooltipElement = (
+      <div className={`tooltip tooltip-${position}`} style={tooltipStyle}>
+        {content}
+        <div className="tooltip-arrow"></div>
+      </div>
+    );
+
+    // Usar Portal para renderizar en el body
+    return createPortal(tooltipElement, document.body);
+  };
+
   return (
     <div 
       ref={containerRef}
@@ -72,14 +86,9 @@ const Tooltip = ({ children, content, position = 'top' }) => {
       onMouseLeave={hideTooltip}
     >
       {children}
-      {isVisible && (
-        <div className={`tooltip tooltip-${position}`} style={tooltipStyle}>
-          {content}
-          <div className="tooltip-arrow"></div>
-        </div>
-      )}
+      {renderTooltip()}
     </div>
   );
 };
 
-export default Tooltip;
+export default TooltipPortal;
