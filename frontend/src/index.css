@@ -123,142 +123,9 @@ code {
   border-color: #404040;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
 
-.table th,
-.table td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #e9ecef;
-}
 
-.table th {
-  background-color: #f8f9fa;
-  font-weight: 600;
-  color: #333;
-}
 
-.table tr:hover {
-  background-color: #f8f9fa;
-}
-
-/* Centrar columnas específicas: Cantidad, Precio, Categoría y Acciones */
-/* Para la tabla principal (6 columnas) */
-.table th:nth-child(3),
-.table td:nth-child(3),
-.table th:nth-child(4),
-.table td:nth-child(4),
-.table th:nth-child(5),
-.table td:nth-child(5),
-.table th:nth-child(6),
-.table td:nth-child(6) {
-  text-align: center;
-}
-
-/* Para el reporte de bajo stock (6 columnas) - centrar todas excepto la primera */
-.table th:nth-child(2),
-.table td:nth-child(2) {
-  text-align: center;
-}
-
-/* Estilos específicos para el reporte de bajo stock - columnas más compactas */
-.low-stock-table th:nth-child(1),
-.low-stock-table td:nth-child(1) {
-  width: 180px;
-  max-width: 180px;
-  min-width: 180px;
-}
-
-.low-stock-table th:nth-child(2),
-.low-stock-table td:nth-child(2) {
-  width: 100px;
-  max-width: 100px;
-  min-width: 100px;
-}
-
-.low-stock-table th:nth-child(3),
-.low-stock-table td:nth-child(3) {
-  width: 100px;
-  max-width: 100px;
-  min-width: 100px;
-}
-
-.low-stock-table th:nth-child(4),
-.low-stock-table td:nth-child(4) {
-  width: 100px;
-  max-width: 100px;
-  min-width: 100px;
-}
-
-.low-stock-table th:nth-child(5),
-.low-stock-table td:nth-child(5) {
-  width: 120px;
-  max-width: 120px;
-  min-width: 120px;
-}
-
-.low-stock-table th:nth-child(6),
-.low-stock-table td:nth-child(6) {
-  width: 180px;
-  max-width: 180px;
-  min-width: 180px;
-}
-
-/* Anchos fijos para todas las columnas */
-/* Columna 1: Nombre - más ancha para descripciones largas */
-.table th:nth-child(1),
-.table td:nth-child(1) {
-  width: 200px;
-  max-width: 200px;
-  min-width: 200px;
-}
-
-/* Columna 2: Descripción (tabla principal) o Stock Actual (reporte) */
-.table th:nth-child(2),
-.table td:nth-child(2) {
-  width: 300px;
-  max-width: 300px;
-  min-width: 300px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Columna 3: Cantidad (tabla principal) o Estado (reporte) */
-.table th:nth-child(3),
-.table td:nth-child(3) {
-  width: 100px;
-  max-width: 100px;
-  min-width: 100px;
-}
-
-/* Columna 4: Precio */
-.table th:nth-child(4),
-.table td:nth-child(4) {
-  width: 120px;
-  max-width: 120px;
-  min-width: 120px;
-}
-
-/* Columna 5: Categoría */
-.table th:nth-child(5),
-.table td:nth-child(5) {
-  width: 150px;
-  max-width: 150px;
-  min-width: 150px;
-}
-
-/* Columna 6: Acciones (tabla principal) o Acción Recomendada (reporte) */
-.table th:nth-child(6),
-.table td:nth-child(6) {
-  width: 200px;
-  max-width: 200px;
-  min-width: 200px;
-}
 
 /* Estilos para el modal de descripción */
 .modal-overlay {
@@ -286,22 +153,7 @@ code {
   position: relative;
 }
 
-.modal-header {
-  background: linear-gradient(135deg, #007bff, #0056b3);
-  color: white;
-  padding: 20px 25px;
-  border-radius: 12px 12px 0 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-.modal-title {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: white;
-}
 
 .modal-close-btn {
   position: absolute;
@@ -333,14 +185,7 @@ code {
   padding: 25px;
 }
 
-.product-name-modal {
-  margin: 0 0 15px 0;
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #333;
-  border-bottom: 2px solid #e9ecef;
-  padding-bottom: 10px;
-}
+
 
 .description-text-modal {
   margin: 0;
@@ -352,47 +197,7 @@ code {
   overflow-wrap: break-word;
 }
 
-/* Responsive para pantallas medianas y pequeñas */
-@media (max-width: 1280px) {
-  .table {
-    display: block;
-    overflow-x: auto;
-  }
-  
-  .table th:nth-child(2),
-  .table td:nth-child(2) {
-    width: 250px;
-    max-width: 250px;
-    min-width: 250px;
-  }
-  
-  .table th,
-  .table td {
-    padding: 10px;
-    font-size: 14px;
-  }
-}
 
-/* Responsive para móviles */
-@media (max-width: 768px) {
-  .table {
-    display: block;
-    overflow-x: auto;
-  }
-  
-  .table th:nth-child(2),
-  .table td:nth-child(2) {
-    width: 200px;
-    max-width: 200px;
-    min-width: 200px;
-  }
-  
-  .table th,
-  .table td {
-    padding: 8px;
-    font-size: 14px;
-  }
-}
 
 .header {
   text-align: center;

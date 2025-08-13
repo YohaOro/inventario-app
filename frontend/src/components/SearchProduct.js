@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import DynamicTable from './DynamicTable';
 
 function SearchProduct({ products, initialSearchTerm = '', initialSearchBy = 'nombre' }) {
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
@@ -76,28 +77,44 @@ function SearchProduct({ products, initialSearchTerm = '', initialSearchBy = 'no
       {searchResults.length > 0 ? (
         <div>
           <h3>Resultados de búsqueda ({searchResults.length})</h3>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>Categoría</th>
-              </tr>
-            </thead>
-            <tbody>
-              {searchResults.map((product) => (
-                <tr key={product.id}>
-                  <td><strong>{product.nombre}</strong></td>
-                  <td>{product.descripcion}</td>
-                  <td>{product.cantidad}</td>
-                  <td>${product.precio.toFixed(2)}</td>
-                  <td>{product.categoria}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <DynamicTable
+            data={searchResults}
+            columns={[
+              {
+                key: 'nombre',
+                label: 'Nombre',
+                type: 'text',
+                width: '25%',
+                render: (value) => <strong>{value}</strong>
+              },
+              {
+                key: 'descripcion',
+                label: 'Descripción',
+                type: 'text',
+                width: '35%'
+              },
+              {
+                key: 'cantidad',
+                label: 'Cantidad',
+                type: 'quantity',
+                width: '15%'
+              },
+              {
+                key: 'precio',
+                label: 'Precio',
+                type: 'price',
+                width: '15%'
+              },
+              {
+                key: 'categoria',
+                label: 'Categoría',
+                type: 'category',
+                width: '10%'
+              }
+            ]}
+            title="Resultados de Búsqueda"
+            emptyMessage="No se encontraron productos"
+          />
         </div>
       ) : searchTerm && searchResults.length === 0 ? (
         <div className="empty-state">

@@ -49,7 +49,7 @@ const ProductList = React.memo(({
 
   return (
     <div className="card">
-      <h2>📋 Lista de Productos ({products.length})</h2>
+      <h2>📋 Lista de Productos</h2>
       
       {message && (
         <div className={message.success ? 'success-message' : 'error-message'}>
