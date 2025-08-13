@@ -166,7 +166,7 @@ function App() {
           <div className="error-message">
             <h3>❌ Error de Conexión</h3>
             <p>{error}</p>
-            <button onClick={loadProducts} className="btn">
+            <button onClick={loadProducts} className="btn" title="Reintentar conexión con el servidor">
               🔄 Reintentar
             </button>
           </div>

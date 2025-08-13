@@ -176,7 +176,7 @@ function AddProduct({ onAdd }) {
           {errors.categoria && <span className="error-message">{errors.categoria}</span>}
         </div>
 
-        <button type="submit" className="btn" disabled={submitting}>
+        <button type="submit" className="btn" disabled={submitting} title="Crear nuevo producto en el inventario">
           {submitting ? '🔄 Guardando...' : '✅ Guardar Producto'}
         </button>
       </form>

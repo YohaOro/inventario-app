@@ -10,7 +10,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #404040 100%);
   min-height: 100vh;
 }
 
@@ -34,7 +34,7 @@ code {
 }
 
 .btn {
-  background: #667eea;
+  background: #404040;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -45,24 +45,24 @@ code {
 }
 
 .btn:hover {
-  background: #5a6fd8;
+  background: #2d2d2d;
   transform: translateY(-2px);
 }
 
 .btn-secondary {
-  background: #6c757d;
+  background: #666666;
 }
 
 .btn-secondary:hover {
-  background: #5a6268;
+  background: #4d4d4d;
 }
 
 .btn-danger {
-  background: #dc3545;
+  background: #8b0000;
 }
 
 .btn-danger:hover {
-  background: #c82333;
+  background: #660000;
 }
 
 .form-group {
@@ -87,7 +87,7 @@ code {
 
 .form-control:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #404040;
 }
 
 .table {
@@ -381,12 +381,24 @@ code {
 }
 
 .nav-tab.active {
-  background: #667eea;
+  background: #404040;
   color: white;
 }
 
 .nav-tab:hover:not(.active) {
-  background: #f8f9fa;
+  background: #e9ecef;
+}
+
+/* Estilos para badges de categoría */
+.category-badge {
+  background: #404040;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 

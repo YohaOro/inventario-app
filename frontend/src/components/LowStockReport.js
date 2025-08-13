@@ -5,10 +5,10 @@ function LowStockReport({ products }) {
   const lowStockProducts = products.filter(product => product.cantidad < lowStockThreshold);
 
   const getStockStatus = (quantity) => {
-    if (quantity === 0) return { status: 'Sin Stock', color: '#dc3545' };
-    if (quantity <= 3) return { status: 'Crítico', color: '#dc3545' };
-    if (quantity <= 7) return { status: 'Bajo', color: '#ffc107' };
-    return { status: 'Normal', color: '#28a745' };
+    if (quantity === 0) return { status: 'Sin Stock', color: '#8b0000' };
+    if (quantity <= 3) return { status: 'Crítico', color: '#8b0000' };
+    if (quantity <= 7) return { status: 'Bajo', color: '#666666' };
+    return { status: 'Normal', color: '#404040' };
   };
 
   if (lowStockProducts.length === 0) {
@@ -68,15 +68,15 @@ function LowStockReport({ products }) {
                 <td>{product.categoria}</td>
                 <td>
                   {product.cantidad === 0 ? (
-                    <span style={{ color: '#dc3545', fontWeight: 'bold' }}>
+                    <span style={{ color: '#8b0000', fontWeight: 'bold' }}>
                       ⚠️ Reabastecer URGENTE
                     </span>
                   ) : product.cantidad <= 3 ? (
-                    <span style={{ color: '#ffc107', fontWeight: 'bold' }}>
+                    <span style={{ color: '#666666', fontWeight: 'bold' }}>
                       🔴 Reabastecer pronto
                     </span>
                   ) : (
-                    <span style={{ color: '#28a745' }}>
+                    <span style={{ color: '#404040' }}>
                       🟡 Monitorear stock
                     </span>
                   )}
@@ -87,7 +87,7 @@ function LowStockReport({ products }) {
         </tbody>
       </table>
 
-      <div style={{ marginTop: '20px', padding: '16px', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
+      <div style={{ marginTop: '20px', padding: '16px', backgroundColor: '#f5f5f5', borderRadius: '8px' }}>
         <h4>📈 Resumen del Reporte:</h4>
         <ul style={{ marginTop: '10px', paddingLeft: '20px' }}>
           <li>Total de productos con bajo stock: <strong>{lowStockProducts.length}</strong></li>

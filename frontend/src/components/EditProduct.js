@@ -159,10 +159,10 @@ function EditProduct({ product, onUpdate, onCancel }) {
         </div>
 
         <div style={{ display: 'flex', gap: '10px' }}>
-          <button type="submit" className="btn">
+          <button type="submit" className="btn" title="Guardar cambios del producto">
             💾 Actualizar Producto
           </button>
-          <button type="button" className="btn btn-secondary" onClick={onCancel}>
+          <button type="button" className="btn btn-secondary" onClick={onCancel} title="Cancelar edición">
             ❌ Cancelar
           </button>
         </div>

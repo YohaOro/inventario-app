@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Tooltip from './Tooltip';
+import './ProductList.css';
 import TruncatedDescription from './TruncatedDescription';
 
 function ProductList({ 
@@ -114,7 +116,7 @@ function ProductList({
               </td>
               <td>
                 <span style={{ 
-                  color: product.cantidad < 10 ? '#dc3545' : '#28a745',
+                  color: product.cantidad < 10 ? '#8b0000' : '#404040',
                   fontWeight: 'bold'
                 }}>
                   {product.cantidad}
@@ -125,21 +127,25 @@ function ProductList({
                 <span className="category-badge">{product.categoria}</span>
               </td>
               <td>
-                <button 
-                  className="btn btn-secondary" 
-                  onClick={() => onEdit(product)}
-                  style={{ marginRight: '8px', padding: '8px 16px' }}
-                >
-                  Editar
-                </button>
-                <button 
-                  className="btn btn-danger" 
-                  onClick={() => handleDelete(product.id)}
-                  disabled={deletingId === product.id}
-                  style={{ padding: '8px 16px' }}
-                >
-                  {deletingId === product.id ? '🔄 Eliminando...' : 'Eliminar'}
-                </button>
+                <Tooltip content="Editar producto">
+                  <button 
+                    className="btn btn-secondary" 
+                    onClick={() => onEdit(product)}
+                    style={{ marginRight: '8px', padding: '8px 16px' }}
+                  >
+                    ✏️ 
+                  </button>
+                </Tooltip>
+                <Tooltip content="Eliminar producto">
+                  <button 
+                    className="btn btn-danger" 
+                    onClick={() => handleDelete(product.id)}
+                    disabled={deletingId === product.id}
+                    style={{ padding: '8px 16px' }}
+                  >
+                    {deletingId === product.id ? '🔄 Eliminando...' : '🗑️'}
+                  </button>
+                </Tooltip>
               </td>
             </tr>
           ))}
@@ -152,13 +158,15 @@ function ProductList({
         {/* Controles de paginación */}
         <div className="pagination-controls">
           {/* Botón Anterior */}
-          <button 
-            className="btn btn-secondary pagination-btn"
-            onClick={onPreviousPage}
-            disabled={currentPage === 1}
-          >
-            ⬅️ Anterior
-          </button>
+                      <Tooltip content="Ir a la página anterior">
+              <button 
+                className="btn btn-secondary pagination-btn"
+                onClick={onPreviousPage}
+                disabled={currentPage === 1}
+              >
+                ⬅️ Anterior
+              </button>
+            </Tooltip>
           
           {/* Números de página */}
           <div className="page-numbers">
@@ -219,13 +227,15 @@ function ProductList({
           </div>
           
           {/* Botón Siguiente */}
-          <button 
-            className="btn btn-secondary pagination-btn"
-            onClick={onNextPage}
-            disabled={currentPage === Math.ceil(totalProducts / productsPerPage)}
-          >
-            Siguiente ➡️
-          </button>
+                      <Tooltip content="Ir a la página siguiente">
+              <button 
+                className="btn btn-secondary pagination-btn"
+                onClick={onNextPage}
+                disabled={currentPage === Math.ceil(totalProducts / productsPerPage)}
+              >
+                Siguiente ➡️
+              </button>
+            </Tooltip>
         </div>
       </div>
     </div>

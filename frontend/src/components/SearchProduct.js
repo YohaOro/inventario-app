@@ -68,7 +68,7 @@ function SearchProduct({ products, initialSearchTerm = '', initialSearchBy = 'no
           style={{ flex: 1 }}
         />
         
-        <button onClick={handleSearch} className="btn">
+        <button onClick={handleSearch} className="btn" title="Realizar búsqueda de productos">
           🔍 Buscar
         </button>
       </div>
