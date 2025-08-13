@@ -1,5 +1,24 @@
 {
+  "name": "inventario-app-dev",
+  "version": "1.0.0",
+  "description": "Dependencias de desarrollo para el Sistema de Inventario",
+  "private": true,
+  "scripts": {
+    "dev": "./quick-start.sh",
+    "dev:basic": "./dev-start.sh",
+    "dev:watchman": "./watchman-start.sh",
+    "clean": "rm -rf frontend/node_modules backend/__pycache__ *.pyc",
+    "clean:all": "rm -rf frontend/node_modules backend/__pycache__ *.pyc inventario.db",
+    "status": "npx pm2 status",
+    "logs": "npx pm2 logs",
+    "restart": "npx pm2 restart all",
+    "stop": "npx pm2 stop all"
+  },
   "devDependencies": {
-    "pm2": "^6.0.8"
+    "pm2": "^5.4.3"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   }
 }
