@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DynamicTable from './DynamicTable';
-import DescriptionModal from './DescriptionModal';
-import DeleteConfirmationModal from './DeleteConfirmationModal';
+import DynamicModal from './DynamicModal';
 import './TableStyles.css';
 
 const ProductList = React.memo(({ 
@@ -314,21 +313,30 @@ const ProductList = React.memo(({
       </div>
       
       {/* Modal de Descripción */}
-      <DescriptionModal
+      <DynamicModal
+        type="description"
         isOpen={descriptionModal.isOpen}
         onClose={() => setDescriptionModal({ isOpen: false, description: '', productName: '' })}
-        description={descriptionModal.description}
-        productName={descriptionModal.productName}
+        content={descriptionModal.description}
       />
 
       {/* Modal de Confirmación de Eliminación */}
-      <DeleteConfirmationModal
+      <DynamicModal
+        type="delete-confirmation"
         isOpen={deleteModal.isOpen}
         onClose={closeDeleteModal}
-        onConfirm={confirmDelete}
-        productName={deleteModal.productName}
-        isDeleting={deletingId !== null}
-        showSuccess={deleteModal.showSuccess}
+        title={`¿Eliminar "${deleteModal.productName}"?`}
+        content="¿Estás seguro de que quieres eliminar este producto?"
+        actions={
+          <>
+            <button className="cancel-btn" onClick={closeDeleteModal} disabled={deletingId !== null}>
+              Cancelar
+            </button>
+            <button className="confirm-btn" onClick={confirmDelete} disabled={deletingId !== null}>
+              {deletingId !== null ? 'Eliminando...' : 'Eliminar Permanente'}
+            </button>
+          </>
+        }
       />
     </div>
   );

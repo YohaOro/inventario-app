@@ -123,11 +123,7 @@ code {
   border-color: #404040;
 }
 
-
-
-
-
-/* Estilos para el modal de descripción */
+/* Estilos mínimos para el modal de descripción */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -135,71 +131,37 @@ code {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   z-index: 1000;
 }
 
 .modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: white;
-  border-radius: 12px;
-  padding: 0;
-  max-width: 600px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  z-index: 1001;
+  max-width: 500px;
   width: 90%;
-  max-height: 80vh;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  position: relative;
 }
-
-
 
 .modal-close-btn {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 10px;
+  right: 10px;
   background: #dc3545;
-  border: none;
   color: white;
-  font-size: 18px;
-  font-weight: bold;
+  border: none;
+  padding: 5px 10px;
   cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 35px;
-  height: 35px;
-  z-index: 1001;
 }
-
-.modal-close-btn:hover {
-  background: #c82333;
-  transform: scale(1.05);
-}
-
-.modal-body {
-  padding: 25px;
-}
-
-
 
 .description-text-modal {
   margin: 0;
-  line-height: 1.6;
-  color: #555;
-  font-size: 1rem;
-  word-wrap: break-word;
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
+  padding: 10px 0;
 }
-
-
-
-
 
 .nav-tabs {
   display: flex;
