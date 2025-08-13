@@ -235,32 +235,3 @@
 }
 
 
-
-/* Responsive para paginación */
-@media (max-width: 768px) {
-  .pagination-stats {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .pagination-stats span {
-    width: 100%;
-    text-align: center;
-  }
-  
-  .pagination-controls {
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .page-numbers {
-    order: -1;
-  }
-  
-  .pagination-btn {
-    width: 100%;
-    max-width: 200px;
-  }
-}
-
-
