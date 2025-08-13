@@ -40,7 +40,6 @@ const LowStockReport = React.memo(({ products }) => {
             render: (value, item) => (
               <div className="product-name">
                 <strong>{value}</strong>
-                <span className="product-id">#{item.id}</span>
               </div>
             )
           },

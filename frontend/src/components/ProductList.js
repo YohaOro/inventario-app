@@ -66,25 +66,25 @@ const ProductList = React.memo(({
           gap: '15px'
         }}>
           <div style={{ textAlign: 'center' }}>
-            <h4 style={{ margin: '0 0 5px 0', color: '#28a745' }}>📦 Total Productos</h4>
+            <h4 style={{ margin: '0 0 5px 0', color: '#28a745' }}>Total Productos</h4>
             <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#28a745' }}>
               {statistics.total_products}
             </span>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <h4 style={{ margin: '0 0 5px 0', color: '#007bff' }}>💰 Valor Total</h4>
+            <h4 style={{ margin: '0 0 5px 0', color: '#007bff' }}>Valor Total</h4>
             <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#007bff' }}>
               ${statistics.total_value?.toLocaleString() || 0}
             </span>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <h4 style={{ margin: '0 0 5px 0', color: '#ffc107' }}>⚠️ Bajo Stock</h4>
+            <h4 style={{ margin: '0 0 5px 0', color: '#ffc107' }}>Bajo Stock</h4>
             <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#ffc107' }}>
               {statistics.low_stock_count}
             </span>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <h4 style={{ margin: '0 0 5px 0', color: '#6c757d' }}>📊 % Bajo Stock</h4>
+            <h4 style={{ margin: '0 0 5px 0', color: '#6c757d' }}>% Bajo Stock</h4>
             <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#6c757d' }}>
               {statistics.low_stock_percentage}%
             </span>
@@ -104,7 +104,6 @@ const ProductList = React.memo(({
             render: (value, item) => (
               <div className="product-name">
                 <strong>{value}</strong>
-                <span className="product-id">#{item.id}</span>
               </div>
             )
           },
