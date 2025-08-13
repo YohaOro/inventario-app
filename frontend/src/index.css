@@ -283,9 +283,12 @@ code {
   max-height: 80vh;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
 }
 
 .modal-header {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
   padding: 20px 25px;
   border-radius: 12px 12px 0 0;
   display: flex;
@@ -293,40 +296,56 @@ code {
   align-items: center;
 }
 
-.modal-header h3 {
+.modal-title {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
+  color: white;
 }
 
-.modal-close {
-  background: none;
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #dc3545;
   border: none;
   color: white;
-  font-size: 24px;
+  font-size: 18px;
+  font-weight: bold;
   cursor: pointer;
-  padding: 0;
-  width: 30px;
-  height: 30px;
+  padding: 8px 12px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
+  min-width: 35px;
+  height: 35px;
+  z-index: 1001;
 }
 
-.modal-close:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+.modal-close-btn:hover {
+  background: #c82333;
+  transform: scale(1.05);
 }
 
 .modal-body {
-  padding: 50px 25px 25px 25px;
+  padding: 25px;
 }
 
-.modal-body p {
+.product-name-modal {
+  margin: 0 0 15px 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 10px;
+}
+
+.description-text-modal {
   margin: 0;
   line-height: 1.6;
-  color: #333;
+  color: #555;
   font-size: 1rem;
   word-wrap: break-word;
   white-space: pre-wrap;

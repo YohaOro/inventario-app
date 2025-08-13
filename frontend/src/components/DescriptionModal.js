@@ -7,10 +7,10 @@ const DescriptionModal = ({ isOpen, onClose, description, productName }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-body">
-          <p>{description || 'Sin descripción'}</p>
+          <p className="description-text-modal">{description || 'Sin descripción'}</p>
         </div>
-        <button className="modal-close" onClick={onClose}>
-          ×
+        <button className="modal-close-btn" onClick={onClose} title="Cerrar">
+          ✕
         </button>
       </div>
     </div>
