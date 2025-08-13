@@ -27,10 +27,9 @@ function LowStockReport({ products }) {
       <h2>📊 Reporte de Bajo Stock</h2>
       <p>Productos con menos de {lowStockThreshold} unidades en stock:</p>
       
-      <table className="table">
+      <table className="table low-stock-table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Nombre</th>
             <th>Stock Actual</th>
             <th>Estado</th>
@@ -44,7 +43,6 @@ function LowStockReport({ products }) {
             const stockInfo = getStockStatus(product.cantidad);
             return (
               <tr key={product.id}>
-                <td>{product.id}</td>
                 <td><strong>{product.nombre}</strong></td>
                 <td>
                   <span style={{ 

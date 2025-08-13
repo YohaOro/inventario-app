@@ -79,7 +79,6 @@ function SearchProduct({ products, initialSearchTerm = '', initialSearchBy = 'no
           <table className="table">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Cantidad</th>
@@ -90,7 +89,6 @@ function SearchProduct({ products, initialSearchTerm = '', initialSearchBy = 'no
             <tbody>
               {searchResults.map((product) => (
                 <tr key={product.id}>
-                  <td>{product.id}</td>
                   <td><strong>{product.nombre}</strong></td>
                   <td>{product.descripcion}</td>
                   <td>{product.cantidad}</td>
