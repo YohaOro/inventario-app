@@ -78,6 +78,7 @@ const DynamicTable = ({
                     key={index} 
                     className={`table-header-cell ${column.className || ''}`}
                     style={{ width: column.width || 'auto' }}
+                    data-column={column.key}
                   >
                     {column.label}
                   </th>
@@ -98,6 +99,7 @@ const DynamicTable = ({
                     <td 
                       key={colIndex} 
                       className={`table-cell ${column.className || ''}`}
+                      data-column={column.key}
                     >
                       {renderCellContent(item, column)}
                     </td>

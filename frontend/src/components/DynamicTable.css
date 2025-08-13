@@ -47,6 +47,15 @@
   letter-spacing: 0.5px;
 }
 
+/* Centrar headers específicos */
+.table-header-cell[data-column="cantidad"],
+.table-header-cell[data-column="categoria"],
+.table-header-cell[data-column="precio"],
+.table-header-cell[data-column="stock-actual"],
+.table-header-cell[data-column="estado"] {
+  text-align: center;
+}
+
 .actions-header {
   text-align: center;
   width: 120px;
@@ -74,10 +83,35 @@
 
 /* Celdas de datos */
 .table-cell {
-  padding: 16px 12px;
+  padding: 12px;
   vertical-align: middle;
   color: #495057;
   font-size: 0.9rem;
+  height: 60px; /* Altura fija para consistencia */
+  box-sizing: border-box;
+}
+
+/* Asegurar que el contenido se ajuste a la altura fija */
+.table-cell > div,
+.table-cell > span {
+  max-height: 36px; /* 60px - 24px de padding */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* Para descripciones largas */
+.table-cell .description-cell {
+  max-height: 36px;
+  overflow: hidden;
+}
+
+.table-cell .description-text {
+  line-height: 1.2;
+  max-height: 36px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .actions-cell {
@@ -250,4 +284,116 @@
 
 .table-wrapper::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
+}
+
+/* Estilos específicos para tablas de bajo stock */
+.low-stock-table .table-cell {
+  height: 60px; /* Misma altura que otras tablas */
+}
+
+.low-stock-table .action-recommendation {
+  max-height: 36px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+/* Centrar columnas específicas: stock, categoría, stock actual, estado */
+.table-cell[data-column="cantidad"],
+.table-cell[data-column="categoria"],
+.table-cell[data-column="stock-actual"],
+.table-cell[data-column="estado"] {
+  text-align: center;
+}
+
+/* Centrar columnas por tipo de contenido */
+.table-cell[data-column="cantidad"] > *,
+.table-cell[data-column="categoria"] > *,
+.table-cell[data-column="stock-actual"] > *,
+.table-cell[data-column="estado"] > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Centrar específicamente los valores de stock */
+.table-cell[data-column="cantidad"] .stock-quantity,
+.table-cell[data-column="cantidad"] .quantity-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+/* Centrar badges de cantidad y estado */
+.quantity-badge,
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* Centrar valores numéricos y precios */
+.table-cell[data-column="precio"] > *,
+.table-cell[data-column="cantidad"] > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+}
+
+/* Centrar categorías */
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* Centrar todos los elementos dentro de celdas específicas */
+.table-cell[data-column="cantidad"],
+.table-cell[data-column="categoria"],
+.table-cell[data-column="precio"] {
+  text-align: center;
+}
+
+/* Centrar headers de columnas específicas */
+.table-header-cell[data-column="cantidad"],
+.table-header-cell[data-column="categoria"],
+.table-header-cell[data-column="precio"] {
+  text-align: center;
+}
+
+/* Centrar headers por nombre de columna */
+.table-header-cell:has([data-column="cantidad"]),
+.table-header-cell:has([data-column="categoria"]),
+.table-header-cell:has([data-column="precio"]) {
+  text-align: center;
+}
+
+/* Centrar headers específicos por contenido */
+th[data-column="cantidad"],
+th[data-column="categoria"],
+th[data-column="precio"] {
+  text-align: center;
+}
+
+.table-cell[data-column="cantidad"] > *,
+.table-cell[data-column="categoria"] > *,
+.table-cell[data-column="precio"] > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
 }
