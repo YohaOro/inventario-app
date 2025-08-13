@@ -1,5 +1,5 @@
 import React from 'react';
-import CategoryBadge from './CategoryBadge';
+import DynamicTable from './DynamicTable';
 import './TableStyles.css';
 
 const LowStockReport = React.memo(({ products }) => {
@@ -29,57 +29,93 @@ const LowStockReport = React.memo(({ products }) => {
       <h2>📊 Reporte de Bajo Stock</h2>
       <p>Productos con menos de {lowStockThreshold} unidades en stock:</p>
       
-      <table className="product-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Stock Actual</th>
-            <th>Estado</th>
-            <th>Precio</th>
-            <th>Categoría</th>
-            <th>Acción Recomendada</th>
-          </tr>
-        </thead>
-        <tbody>
-          {lowStockProducts.map((product) => {
-            const stockInfo = getStockStatus(product.cantidad);
-            return (
-              <tr key={product.id}>
-                <td><strong>{product.nombre}</strong></td>
-                <td>
-                  <span className={`stock-quantity ${stockInfo.className}`}>
-                    {product.cantidad}
+            <DynamicTable
+        data={lowStockProducts}
+        columns={[
+          {
+            key: 'nombre',
+            label: 'Nombre del Producto',
+            type: 'text',
+            width: '20%',
+            render: (value, item) => (
+              <div className="product-name">
+                <strong>{value}</strong>
+                <span className="product-id">#{item.id}</span>
+              </div>
+            )
+          },
+          {
+            key: 'cantidad',
+            label: 'Stock Actual',
+            type: 'quantity',
+            width: '15%',
+            render: (value, item) => {
+              const stockInfo = getStockStatus(value);
+              return (
+                <span className={`stock-quantity ${stockInfo.className}`}>
+                  {value}
+                </span>
+              );
+            }
+          },
+          {
+            key: 'cantidad',
+            label: 'Estado',
+            type: 'text',
+            width: '15%',
+            render: (value, item) => {
+              const stockInfo = getStockStatus(value);
+              return (
+                <span className={`stock-status ${stockInfo.className}`}>
+                  {stockInfo.status}
+                </span>
+              );
+            }
+          },
+          {
+            key: 'precio',
+            label: 'Precio',
+            type: 'price',
+            width: '15%'
+          },
+          {
+            key: 'categoria',
+            label: 'Categoría',
+            type: 'category',
+            width: '15%'
+          },
+          {
+            key: 'cantidad',
+            label: 'Acción Recomendada',
+            type: 'text',
+            width: '20%',
+            render: (value, item) => {
+              if (value === 0) {
+                return (
+                  <span className="action-recommendation urgent">
+                    ⚠️ Reabastecer URGENTE
                   </span>
-                </td>
-                <td>
-                  <span className={`stock-status ${stockInfo.className}`}>
-                    {stockInfo.status}
+                );
+              } else if (value <= 3) {
+                return (
+                  <span className="action-recommendation urgent">
+                    🔴 Reabastecer pronto
                   </span>
-                </td>
-                <td>${product.precio.toFixed(2)}</td>
-                <td>
-                  <CategoryBadge category={product.categoria} size="small" />
-                </td>
-                <td>
-                  {product.cantidad === 0 ? (
-                    <span className="action-recommendation urgent">
-                      ⚠️ Reabastecer URGENTE
-                    </span>
-                  ) : product.cantidad <= 3 ? (
-                    <span className="action-recommendation soon">
-                      🔴 Reabastecer pronto
-                    </span>
-                  ) : (
-                    <span className="action-recommendation monitor">
-                      🟡 Monitorear stock
-                    </span>
-                  )}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                );
+              } else {
+                return (
+                  <span className="action-recommendation monitor">
+                    🟡 Monitorear stock
+                  </span>
+                );
+              }
+            }
+          }
+        ]}
+        showActions={false}
+        emptyMessage="No hay productos con bajo stock"
+        className="low-stock-table"
+      />
 
       <div style={{ marginTop: '20px', padding: '16px', backgroundColor: '#f5f5f5', borderRadius: '8px' }}>
         <h4>📈 Resumen del Reporte:</h4>
