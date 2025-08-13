@@ -1,10 +1,10 @@
 // Configuración de la API para diferentes entornos
 const config = {
   development: {
-    apiUrl: 'http://localhost:5001/api'
+    apiUrl: '/api' // API Routes locales
   },
   production: {
-    apiUrl: 'https://tu-backend-vercel.vercel.app/api' // Cambiar por tu URL real
+    apiUrl: '/api' // API Routes en Vercel
   }
 };
 
