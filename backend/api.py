@@ -45,14 +45,31 @@ def init_database():
             )
         ''')
         
-        # Insertar algunos productos de ejemplo
-        cursor.execute('''
-            INSERT OR IGNORE INTO productos (nombre, descripcion, cantidad, precio, categoria)
-            VALUES 
-                ('Laptop Dell XPS 13', 'Laptop ultrabook de 13 pulgadas', 5, 1299.99, 'Tecnología'),
-                ('Mouse inalámbrico Logitech', 'Mouse ergonómico con sensor óptico', 15, 29.99, 'Accesorios'),
-                ('Monitor Samsung 24"', 'Monitor LED Full HD', 8, 199.99, 'Tecnología')
-        ''')
+        # Insertar productos de ejemplo de todas las categorías
+        productos_ejemplo = [
+            ('Laptop Dell XPS 13', 'Laptop ultrabook de 13 pulgadas', 5, 1299.99, 'Tecnología'),
+            ('Mouse inalámbrico Logitech', 'Mouse ergonómico con sensor óptico', 15, 29.99, 'Accesorios'),
+            ('Silla de oficina ergonómica', 'Silla con respaldo ajustable y soporte lumbar', 20, 299.99, 'Oficina'),
+            ('Sofá de 3 plazas', 'Sofá moderno con tapizado de tela resistente', 8, 899.99, 'Hogar'),
+            ('Pelota de fútbol profesional', 'Pelota oficial FIFA con válvula de aire', 25, 89.99, 'Deportes'),
+            ('Camiseta básica algodón', 'Camiseta 100% algodón en varios colores', 50, 24.99, 'Ropa'),
+            ('Set de bloques de construcción', '100 piezas de plástico resistente', 30, 45.99, 'Juguetes'),
+            ('Libro "El Principito"', 'Edición ilustrada en tapa dura', 40, 19.99, 'Libros'),
+            ('Guitarra acústica', 'Guitarra de 6 cuerdas con funda incluida', 12, 199.99, 'Música'),
+            ('Set de ollas antiadherentes', '5 piezas con mango ergonómico', 15, 149.99, 'Cocina'),
+            ('Maceta de cerámica grande', 'Maceta de 30cm con plato incluido', 35, 34.99, 'Jardín'),
+            ('Aceite de motor sintético', 'Aceite 5W-30 para motor de gasolina', 60, 12.99, 'Automotriz'),
+            ('Termómetro digital', 'Termómetro de precisión con pantalla LCD', 25, 15.99, 'Salud'),
+            ('Set de maquillaje profesional', 'Paleta de sombras y pinceles incluidos', 18, 79.99, 'Belleza'),
+            ('Juguete para perro resistente', 'Pelota de goma para perros grandes', 45, 8.99, 'Mascotas')
+        ]
+        
+        # Insertar cada producto
+        for producto in productos_ejemplo:
+            cursor.execute('''
+                INSERT OR IGNORE INTO productos (nombre, descripcion, cantidad, precio, categoria)
+                VALUES (?, ?, ?, ?, ?)
+            ''', producto)
         
         conn.commit()
         conn.close()

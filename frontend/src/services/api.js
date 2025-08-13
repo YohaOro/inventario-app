@@ -1,5 +1,5 @@
 // Servicio para conectar con la API REST del backend
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
+import { API_BASE_URL, API_CONFIG } from '../config/api';
 
 class ApiService {
   // Método genérico para hacer peticiones HTTP

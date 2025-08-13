@@ -149,11 +149,22 @@ function EditProduct({ product, onUpdate, onCancel }) {
             onChange={handleChange}
           >
             <option value="">Selecciona una categoría</option>
-            <option value="Mueblería">Mueblería</option>
-            <option value="Jardinería">Jardinería</option>
+            <option value="Tecnología">Tecnología</option>
+            <option value="Accesorios">Accesorios</option>
             <option value="Oficina">Oficina</option>
-            <option value="Electrónicos">Electrónicos</option>
-            <option value="Otros">Otros</option>
+            <option value="Hogar">Hogar</option>
+            <option value="Deportes">Deportes</option>
+            <option value="Ropa">Ropa</option>
+            <option value="Juguetes">Juguetes</option>
+            <option value="Libros">Libros</option>
+            <option value="Música">Música</option>
+            <option value="Cocina">Cocina</option>
+            <option value="Jardín">Jardín</option>
+            <option value="Automotriz">Automotriz</option>
+            <option value="Salud">Salud</option>
+            <option value="Belleza">Belleza</option>
+            <option value="Mascotas">Mascotas</option>
+            <option value="Sin categoría">Sin categoría</option>
           </select>
           {errors.categoria && <span className="error-message">{errors.categoria}</span>}
         </div>
