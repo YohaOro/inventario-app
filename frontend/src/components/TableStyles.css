@@ -1,0 +1,218 @@
+/* Estilos unificados para todas las tablas de la aplicación */
+
+/* Tabla principal de productos */
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin: 20px 0;
+  table-layout: fixed;
+}
+
+.product-table th {
+  background: #f8f9fa;
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 14px;
+}
+
+.product-table td {
+  padding: 15px;
+  border-bottom: 1px solid #dee2e6;
+  vertical-align: middle;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-table tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease;
+}
+
+.product-table tr:last-child td {
+  border-bottom: none;
+}
+
+.product-table tbody tr:nth-child(even) {
+  background-color: #fafbfc;
+}
+
+.product-table tbody tr:nth-child(even):hover {
+  background-color: #f8f9fa;
+}
+
+/* Estilos para el estado del stock */
+.stock-status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stock-status.critical {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+}
+
+.stock-status.low {
+  background: linear-gradient(135deg, #fd7e14, #e55a00);
+  color: white;
+}
+
+.stock-status.normal {
+  background: linear-gradient(135deg, #28a745, #1e7e34);
+  color: white;
+}
+
+.stock-status.no-stock {
+  background: linear-gradient(135deg, #8b0000, #660000);
+  color: white;
+}
+
+/* Estilos para las acciones recomendadas */
+.action-recommendation {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.action-recommendation.urgent {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.action-recommendation.soon {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.action-recommendation.monitor {
+  background: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+/* Estilos para la cantidad de stock */
+.stock-quantity {
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* Centrar columnas específicas en la tabla de productos */
+.product-table th:nth-child(3),
+.product-table td:nth-child(3) {
+  text-align: center;
+}
+
+.product-table th:nth-child(4),
+.product-table td:nth-child(4) {
+  text-align: center;
+}
+
+/* Definir anchos específicos para evitar movimientos */
+.product-table th:nth-child(1),
+.product-table td:nth-child(1) {
+  width: 20%;
+}
+
+.product-table th:nth-child(2),
+.product-table td:nth-child(2) {
+  width: 30%;
+  white-space: normal;
+  overflow: visible;
+}
+
+.product-table th:nth-child(3),
+.product-table td:nth-child(3) {
+  width: 10%;
+}
+
+.product-table th:nth-child(4),
+.product-table td:nth-child(4) {
+  width: 10%;
+}
+
+.product-table th:nth-child(5),
+.product-table td:nth-child(5) {
+  width: 15%;
+}
+
+.product-table th:nth-child(6),
+.product-table td:nth-child(6) {
+  width: 15%;
+}
+
+.stock-quantity.critical {
+  color: #dc3545;
+}
+
+.stock-quantity.low {
+  color: #fd7e14;
+}
+
+.stock-quantity.normal {
+  color: #28a745;
+}
+
+.stock-quantity.no-stock {
+  color: #8b0000;
+  font-size: 18px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .product-table {
+    font-size: 13px;
+  }
+  
+  .product-table th,
+  .product-table td {
+    padding: 10px 8px;
+  }
+  
+  .stock-status {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+  
+  .action-recommendation {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+  
+  .stock-quantity {
+    font-size: 14px;
+  }
+}
+
+/* Estilos para tablas en tarjetas */
+.card .product-table {
+  margin: 0;
+  box-shadow: none;
+  border: 1px solid #dee2e6;
+}
+
+.card .product-table th {
+  background: #f8f9fa;
+}
+
+.card .product-table td {
+  background: white;
+}

@@ -1,14 +1,16 @@
 import React from 'react';
+import CategoryBadge from './CategoryBadge';
+import './TableStyles.css';
 
-function LowStockReport({ products }) {
+const LowStockReport = React.memo(({ products }) => {
   const lowStockThreshold = 10;
   const lowStockProducts = products.filter(product => product.cantidad < lowStockThreshold);
 
   const getStockStatus = (quantity) => {
-    if (quantity === 0) return { status: 'Sin Stock', color: '#8b0000' };
-    if (quantity <= 3) return { status: 'Crítico', color: '#8b0000' };
-    if (quantity <= 7) return { status: 'Bajo', color: '#666666' };
-    return { status: 'Normal', color: '#404040' };
+    if (quantity === 0) return { status: 'Sin Stock', className: 'no-stock' };
+    if (quantity <= 3) return { status: 'Crítico', className: 'critical' };
+    if (quantity <= 7) return { status: 'Bajo', className: 'low' };
+    return { status: 'Normal', className: 'normal' };
   };
 
   if (lowStockProducts.length === 0) {
@@ -27,7 +29,7 @@ function LowStockReport({ products }) {
       <h2>📊 Reporte de Bajo Stock</h2>
       <p>Productos con menos de {lowStockThreshold} unidades en stock:</p>
       
-      <table className="table low-stock-table">
+      <table className="product-table">
         <thead>
           <tr>
             <th>Nombre</th>
@@ -45,38 +47,30 @@ function LowStockReport({ products }) {
               <tr key={product.id}>
                 <td><strong>{product.nombre}</strong></td>
                 <td>
-                  <span style={{ 
-                    color: stockInfo.color, 
-                    fontWeight: 'bold',
-                    fontSize: '18px'
-                  }}>
+                  <span className={`stock-quantity ${stockInfo.className}`}>
                     {product.cantidad}
                   </span>
                 </td>
                 <td>
-                  <span style={{ 
-                    backgroundColor: stockInfo.color, 
-                    color: 'white',
-                    padding: '4px 8px',
-                    borderRadius: '4px',
-                    fontSize: '12px'
-                  }}>
+                  <span className={`stock-status ${stockInfo.className}`}>
                     {stockInfo.status}
                   </span>
                 </td>
                 <td>${product.precio.toFixed(2)}</td>
-                <td>{product.categoria}</td>
+                <td>
+                  <CategoryBadge category={product.categoria} size="small" />
+                </td>
                 <td>
                   {product.cantidad === 0 ? (
-                    <span style={{ color: '#8b0000', fontWeight: 'bold' }}>
+                    <span className="action-recommendation urgent">
                       ⚠️ Reabastecer URGENTE
                     </span>
                   ) : product.cantidad <= 3 ? (
-                    <span style={{ color: '#666666', fontWeight: 'bold' }}>
+                    <span className="action-recommendation soon">
                       🔴 Reabastecer pronto
                     </span>
                   ) : (
-                    <span style={{ color: '#404040' }}>
+                    <span className="action-recommendation monitor">
                       🟡 Monitorear stock
                     </span>
                   )}
@@ -98,6 +92,6 @@ function LowStockReport({ products }) {
       </div>
     </div>
   );
-}
+});
 
 export default LowStockReport;

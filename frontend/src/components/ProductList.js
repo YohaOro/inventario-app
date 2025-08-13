@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Tooltip from './Tooltip';
-import './ProductList.css';
+import CategoryBadge from './CategoryBadge';
+import './TableStyles.css';
 import TruncatedDescription from './TruncatedDescription';
 
-function ProductList({ 
+const ProductList = React.memo(({ 
   products, 
   onEdit, 
   onDelete, 
@@ -15,7 +16,7 @@ function ProductList({
   onNextPage,
   onGoToPage,
   onSearchProduct
-}) {
+}) => {
   const [deletingId, setDeletingId] = useState(null);
   const [message, setMessage] = useState(null);
 
@@ -93,7 +94,7 @@ function ProductList({
         </div>
       )}
       
-      <table className="table">
+      <table className="product-table">
         <thead>
           <tr>
             <th>Nombre</th>
@@ -115,16 +116,13 @@ function ProductList({
                 />
               </td>
               <td>
-                <span style={{ 
-                  color: product.cantidad < 10 ? '#8b0000' : '#404040',
-                  fontWeight: 'bold'
-                }}>
+                <span className={`stock-quantity ${product.cantidad < 10 ? 'low' : 'normal'}`}>
                   {product.cantidad}
                 </span>
               </td>
               <td>${product.precio.toFixed(2)}</td>
               <td>
-                <span className="category-badge">{product.categoria}</span>
+                <CategoryBadge category={product.categoria} size="small" />
               </td>
               <td>
                 <Tooltip content="Editar producto">
@@ -240,6 +238,6 @@ function ProductList({
       </div>
     </div>
   );
-}
+});
 
 export default ProductList;
