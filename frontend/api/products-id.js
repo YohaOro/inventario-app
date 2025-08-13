@@ -11,7 +11,9 @@ export default function handler(req, res) {
     return;
   }
 
-  const { id } = req.query;
+  // Extraer ID de la URL
+  const urlParts = req.url.split('/');
+  const id = urlParts[urlParts.length - 1];
   const productId = parseInt(id);
 
   // Datos de ejemplo (en producción esto vendría de una base de datos)

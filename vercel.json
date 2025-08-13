@@ -9,12 +9,11 @@
       }
     }
   ],
-  "functions": {
-    "frontend/api/**/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "routes": [
+    {
+      "src": "/api/products/([^/]+)",
+      "dest": "/frontend/api/products-id.js"
+    },
     {
       "src": "/api/(.*)",
       "dest": "/frontend/api/$1"
