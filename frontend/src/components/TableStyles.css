@@ -49,6 +49,36 @@
   background-color: #f8f9fa;
 }
 
+/* Estilos unificados para stock-quantity en todas las tablas */
+.stock-quantity {
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+  min-width: 30px;
+  display: inline-block;
+}
+
+.stock-quantity.no-stock {
+  color: #8b0000;
+}
+
+.stock-quantity.critical {
+  color: #dc3545;
+}
+
+.stock-quantity.low {
+  color: #fd7e14;
+}
+
+.stock-quantity.warning {
+  color: #e0a800;
+}
+
+.stock-quantity.normal-stock {
+  color: #28a745;
+}
+
 /* Estilos para el estado del stock */
 .stock-status {
   padding: 4px 12px;
@@ -385,35 +415,7 @@
   color: #495057;
 }
 
-/* Estilos específicos para la tabla de bajo stock */
-.low-stock-table .stock-quantity {
-  font-weight: 600;
-  padding: 4px 8px;
-  border-radius: 4px;
-  text-align: center;
-  min-width: 40px;
-  display: inline-block;
-}
 
-.low-stock-table .stock-quantity.critical {
-  background: #dc3545;
-  color: white;
-}
-
-.low-stock-table .stock-quantity.low {
-  background: #fd7e14;
-  color: white;
-}
-
-.low-stock-table .stock-quantity.normal {
-  background: #28a745;
-  color: white;
-}
-
-.low-stock-table .stock-quantity.no-stock {
-  background: #8b0000;
-  color: white;
-}
 
 .low-stock-table .action-recommendation.urgent {
   background: #fff3cd;

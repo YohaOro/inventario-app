@@ -135,7 +135,21 @@ const ProductList = React.memo(({
             key: 'cantidad',
             label: 'Stock',
             type: 'quantity',
-            width: '10%'
+            width: '10%',
+            render: (value, item) => {
+              // Usar el mismo sistema de colores que LowStockReport
+              let stockClass = 'normal-stock';
+              if (value === 0) stockClass = 'no-stock';
+              else if (value <= 3) stockClass = 'critical';
+              else if (value <= 7) stockClass = 'low';
+              else if (value < 10) stockClass = 'warning';
+              
+              return (
+                <span className={`stock-quantity ${stockClass}`}>
+                  {value}
+                </span>
+              );
+            }
           },
           {
             key: 'precio',
