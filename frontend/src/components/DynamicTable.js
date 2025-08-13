@@ -1,5 +1,6 @@
 import React from 'react';
 import CategoryBadge from './CategoryBadge';
+import TooltipPortal from './TooltipPortal';
 import './DynamicTable.css';
 
 const DynamicTable = ({ 
@@ -105,40 +106,43 @@ const DynamicTable = ({
                     <td className="table-cell actions-cell">
                       <div className="action-buttons">
                         {onView && (
-                          <button 
-                            className="action-btn view-btn"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onView(item);
-                            }}
-                            title="Ver detalles"
-                          >
-                            👁️
-                          </button>
+                          <TooltipPortal content="Ver detalles del producto" position="top">
+                            <button 
+                              className="action-btn view-btn"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onView(item);
+                              }}
+                            >
+                              👁️
+                            </button>
+                          </TooltipPortal>
                         )}
                         {onEdit && (
-                          <button 
-                            className="action-btn edit-btn"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onEdit(item);
-                            }}
-                            title="Editar"
-                          >
-                            ✏️
-                          </button>
+                          <TooltipPortal content="Editar producto" position="top">
+                            <button 
+                              className="action-btn edit-btn"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onEdit(item);
+                              }}
+                            >
+                              ✏️
+                            </button>
+                          </TooltipPortal>
                         )}
                         {onDelete && (
-                          <button 
-                            className="action-btn delete-btn"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onDelete(item);
-                            }}
-                            title="Eliminar"
-                          >
-                            🗑️
-                          </button>
+                          <TooltipPortal content="Eliminar producto" position="top">
+                            <button 
+                              className="action-btn delete-btn"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onDelete(item);
+                              }}
+                            >
+                              🗑️
+                            </button>
+                          </TooltipPortal>
                         )}
                       </div>
                     </td>
