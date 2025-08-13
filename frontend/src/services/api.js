@@ -1,5 +1,5 @@
 // Servicio para conectar con la API REST del backend
-import { API_BASE_URL } from '../config/api';
+import { API_BASE_URL } from '../config/api.js';
 
 class ApiService {
   // Método genérico para hacer peticiones HTTP
