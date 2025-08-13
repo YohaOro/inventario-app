@@ -1,0 +1,271 @@
+/* Contenedor principal de la tabla dinámica */
+.dynamic-table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+/* Header de la tabla */
+.table-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  color: white;
+}
+
+.table-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Wrapper de la tabla */
+.table-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* Tabla principal */
+.dynamic-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+/* Celdas del header */
+.table-header-cell {
+  background: #f8f9fa;
+  color: #495057;
+  font-weight: 600;
+  text-align: left;
+  padding: 16px 12px;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.actions-header {
+  text-align: center;
+  width: 120px;
+}
+
+/* Filas de la tabla */
+.table-row {
+  border-bottom: 1px solid #e9ecef;
+  transition: all 0.2s ease;
+}
+
+.table-row:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table-row.clickable {
+  cursor: pointer;
+}
+
+.table-row.clickable:hover {
+  background-color: #e3f2fd;
+}
+
+/* Celdas de datos */
+.table-cell {
+  padding: 16px 12px;
+  vertical-align: middle;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.actions-cell {
+  text-align: center;
+  width: 120px;
+}
+
+/* Badges para diferentes tipos de datos */
+.quantity-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  min-width: 30px;
+  text-align: center;
+}
+
+.quantity-badge.low-stock {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+}
+
+.quantity-badge.normal-stock {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-align: center;
+  min-width: 80px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-align: center;
+  min-width: 70px;
+}
+
+.status-badge.activo {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+.status-badge.inactivo {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+}
+
+.status-badge.pendiente {
+  background-color: #fff3e0;
+  color: #ef6c00;
+  border: 1px solid #ffcc02;
+}
+
+/* Botones de acción */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+}
+
+.view-btn:hover {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.edit-btn:hover {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.delete-btn:hover {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+/* Estado vacío */
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: #6c757d;
+}
+
+.empty-message {
+  margin: 0;
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dynamic-table-container {
+    margin: 10px 0;
+    border-radius: 8px;
+  }
+  
+  .table-header {
+    padding: 15px;
+  }
+  
+  .table-title {
+    font-size: 1.3rem;
+  }
+  
+  .table-header-cell,
+  .table-cell {
+    padding: 12px 8px;
+    font-size: 0.8rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .action-btn {
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 1rem;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dynamic-table-container {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Scrollbar personalizado */
+.table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

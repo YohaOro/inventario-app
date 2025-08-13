@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import TooltipPortal from './TooltipPortal';
-import CategoryBadge from './CategoryBadge';
+import DynamicTable from './DynamicTable';
 import './TableStyles.css';
-import TruncatedDescription from './TruncatedDescription';
 
 const ProductList = React.memo(({ 
   products, 
@@ -94,61 +92,71 @@ const ProductList = React.memo(({
         </div>
       )}
       
-      <table className="product-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-            <th>Categoría</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product) => (
-            <tr key={product.id}>
-              <td><strong>{product.nombre}</strong></td>
-              <td>
-                <TruncatedDescription 
-                  description={product.descripcion}
-                  productName={product.nombre}
-                />
-              </td>
-              <td>
-                <span className={`stock-quantity ${product.cantidad < 10 ? 'low' : 'normal'}`}>
-                  {product.cantidad}
+      {/* NUEVA TABLA DINÁMICA */}
+      <DynamicTable
+        data={products}
+        columns={[
+          {
+            key: 'nombre',
+            label: 'Nombre del Producto',
+            type: 'text',
+            width: '25%',
+            render: (value, item) => (
+              <div className="product-name">
+                <strong>{value}</strong>
+                <span className="product-id">#{item.id}</span>
+              </div>
+            )
+          },
+          {
+            key: 'descripcion',
+            label: 'Descripción',
+            type: 'text',
+            width: '35%',
+            render: (value, item) => (
+              <div className="description-cell">
+                <span className="description-text">
+                  {value.length > 50 ? `${value.substring(0, 50)}...` : value}
                 </span>
-              </td>
-              <td>${product.precio.toFixed(2)}</td>
-              <td>
-                <CategoryBadge category={product.categoria} size="small" />
-              </td>
-              <td>
-                <TooltipPortal content="Editar producto">
+                {value.length > 50 && (
                   <button 
-                    className="btn btn-secondary" 
-                    onClick={() => onEdit(product)}
-                    style={{ marginRight: '8px', padding: '8px 16px' }}
+                    className="view-more-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      alert(`Descripción completa de ${item.nombre}:\n\n${value}`);
+                    }}
                   >
-                    ✏️ 
+                    Ver más
                   </button>
-                </TooltipPortal>
-                <TooltipPortal content="Eliminar producto">
-                  <button 
-                    className="btn btn-danger" 
-                    onClick={() => handleDelete(product.id)}
-                    disabled={deletingId === product.id}
-                    style={{ padding: '8px 16px' }}
-                  >
-                    {deletingId === product.id ? '🔄 Eliminando...' : '🗑️'}
-                  </button>
-                </TooltipPortal>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                )}
+              </div>
+            )
+          },
+          {
+            key: 'cantidad',
+            label: 'Stock',
+            type: 'quantity',
+            width: '10%'
+          },
+          {
+            key: 'precio',
+            label: 'Precio',
+            type: 'price',
+            width: '15%'
+          },
+          {
+            key: 'categoria',
+            label: 'Categoría',
+            type: 'category',
+            width: '15%'
+          }
+        ]}
+        showActions={true}
+        onEdit={onEdit}
+        onDelete={(item) => handleDelete(item.id)}
+        emptyMessage="No hay productos registrados"
+        className="products-table"
+      />
       
       {/* Información de paginación */}
       <div className="pagination-info">
@@ -156,15 +164,13 @@ const ProductList = React.memo(({
         {/* Controles de paginación */}
         <div className="pagination-controls">
           {/* Botón Anterior */}
-                      <TooltipPortal content="Ir a la página anterior">
-              <button 
-                className="btn btn-secondary pagination-btn"
-                onClick={onPreviousPage}
-                disabled={currentPage === 1}
-              >
-                ⬅️ Anterior
-              </button>
-            </TooltipPortal>
+          <button 
+            className="btn btn-secondary pagination-btn"
+            onClick={onPreviousPage}
+            disabled={currentPage === 1}
+          >
+            ⬅️ Anterior
+          </button>
           
           {/* Números de página */}
           <div className="page-numbers">
@@ -225,15 +231,13 @@ const ProductList = React.memo(({
           </div>
           
           {/* Botón Siguiente */}
-                      <TooltipPortal content="Ir a la página siguiente">
-              <button 
-                className="btn btn-secondary pagination-btn"
-                onClick={onNextPage}
-                disabled={currentPage === Math.ceil(totalProducts / productsPerPage)}
-              >
-                Siguiente ➡️
-              </button>
-            </TooltipPortal>
+          <button 
+            className="btn btn-secondary pagination-btn"
+            onClick={onNextPage}
+            disabled={currentPage === Math.ceil(totalProducts / productsPerPage)}
+          >
+            Siguiente ➡️
+          </button>
         </div>
       </div>
     </div>
