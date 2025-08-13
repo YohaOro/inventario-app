@@ -1,4 +1,5 @@
 import React from 'react';
+import CategoryBadge from './CategoryBadge';
 import './DynamicTable.css';
 
 const DynamicTable = ({ 
@@ -33,11 +34,7 @@ const DynamicTable = ({
           </span>
         );
       case 'category':
-        return (
-          <span className="category-badge" style={{ backgroundColor: getCategoryColor(value) }}>
-            {value}
-          </span>
-        );
+        return <CategoryBadge category={value} size="small" />;
       case 'status':
         return (
           <span className={`status-badge ${value.toLowerCase()}`}>
@@ -53,20 +50,7 @@ const DynamicTable = ({
     }
   };
 
-  // Función para obtener color de categoría
-  const getCategoryColor = (category) => {
-    const colors = {
-      'Mueblería': '#FF6B6B',
-      'Oficina': '#4ECDC4',
-      'Jardinería': '#45B7D1',
-      'Tecnología': '#96CEB4',
-      'Hogar': '#FFEAA7',
-      'Deportes': '#DDA0DD',
-      'Ropa': '#98D8C8',
-      'Libros': '#F7DC6F'
-    };
-    return colors[category] || '#95A5A6';
-  };
+
 
   // Función para manejar clic en fila
   const handleRowClick = (item) => {
