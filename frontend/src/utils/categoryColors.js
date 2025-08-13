@@ -1,19 +1,19 @@
 // Sistema de colores para categorías de productos
 const categoryColors = {
   'Tecnología': '#007bff',      // Azul
-  'Accesorios': '#28a745',      // Verde
-  'Oficina': '#ffc107',         // Amarillo
-  'Hogar': '#dc3545',           // Rojo
-  'Deportes': '#fd7e14',        // Naranja
+  'Accesorios': '#6f42c1',      // Púrpura
+  'Oficina': '#17a2b8',         // Azul claro
+  'Hogar': '#ffcce6',           // Rosa pastel muy claro
+  'Deportes': '#6c757d',        // Gris
   'Ropa': '#6f42c1',            // Púrpura
   'Juguetes': '#e83e8c',        // Rosa
   'Libros': '#20c997',          // Verde azulado
   'Música': '#6c757d',          // Gris
-  'Cocina': '#fd7e14',          // Naranja
-  'Jardín': '#28a745',          // Verde
-  'Automotriz': '#dc3545',      // Rojo
+  'Cocina': '#795548',          // Marrón
+  'Jardín': '#4caf50',          // Verde azulado
+  'Automotriz': '#607d8b',      // Azul gris
   'Salud': '#e83e8c',           // Rosa
-  'Belleza': '#fd7e14',         // Naranja
+  'Belleza': '#9e9e9e',         // Gris medio
   'Mascotas': '#6f42c1',        // Púrpura
   'Sin categoría': '#6c757d'    // Gris
 };

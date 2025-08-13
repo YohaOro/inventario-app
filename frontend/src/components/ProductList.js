@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import DynamicTable from './DynamicTable';
+import DescriptionModal from './DescriptionModal';
 import './TableStyles.css';
 
 const ProductList = React.memo(({ 
@@ -17,6 +18,7 @@ const ProductList = React.memo(({
 }) => {
   const [deletingId, setDeletingId] = useState(null);
   const [message, setMessage] = useState(null);
+  const [descriptionModal, setDescriptionModal] = useState({ isOpen: false, description: '', productName: '' });
 
   const handleDelete = async (id) => {
     if (window.confirm('¿Estás seguro de que quieres eliminar este producto?')) {
@@ -114,20 +116,21 @@ const ProductList = React.memo(({
             width: '35%',
             render: (value, item) => (
               <div className="description-cell">
-                <span className="description-text">
+                <span 
+                  className="description-text clickable-description"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDescriptionModal({
+                      isOpen: true,
+                      description: value,
+                      productName: item.nombre
+                    });
+                  }}
+                  title="Click para ver descripción completa"
+                  style={{ cursor: 'pointer' }}
+                >
                   {value.length > 50 ? `${value.substring(0, 50)}...` : value}
                 </span>
-                {value.length > 50 && (
-                  <button 
-                    className="view-more-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      alert(`Descripción completa de ${item.nombre}:\n\n${value}`);
-                    }}
-                  >
-                    Ver más
-                  </button>
-                )}
               </div>
             )
           },
@@ -253,6 +256,14 @@ const ProductList = React.memo(({
           </button>
         </div>
       </div>
+      
+      {/* Modal de Descripción */}
+      <DescriptionModal
+        isOpen={descriptionModal.isOpen}
+        onClose={() => setDescriptionModal({ isOpen: false, description: '', productName: '' })}
+        description={descriptionModal.description}
+        productName={descriptionModal.productName}
+      />
     </div>
   );
 });

@@ -452,3 +452,23 @@
     justify-content: center;
   }
 }
+
+/* Estilos para descripción clickeable */
+.clickable-description {
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+.clickable-description:hover {
+  color: #007bff;
+}
+
+.description-cell {
+  position: relative;
+}
+
+.description-text {
+  display: block;
+  word-wrap: break-word;
+  max-width: 100%;
+}
