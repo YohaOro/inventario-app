@@ -4,6 +4,8 @@
   "description": "Dependencias de desarrollo para el Sistema de Inventario",
   "private": true,
   "scripts": {
+    "start": "./start-app.sh",
+    "stop": "./stop-app.sh",
     "dev": "./quick-start.sh",
     "dev:basic": "./dev-start.sh",
     "dev:watchman": "./watchman-start.sh",
@@ -12,7 +14,7 @@
     "status": "npx pm2 status",
     "logs": "npx pm2 logs",
     "restart": "npx pm2 restart all",
-    "stop": "npx pm2 stop all"
+    "stop:pm2": "npx pm2 stop all"
   },
   "devDependencies": {
     "pm2": "^5.3.0"
