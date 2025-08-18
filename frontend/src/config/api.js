@@ -4,7 +4,7 @@ const config = {
     apiUrl: 'http://localhost:5001/api' // Backend Flask local
   },
   production: {
-    apiUrl: '/api' // API Routes nativas de Vercel
+    apiUrl: 'https://inventario-app-backend.onrender.com/api' // Backend Flask en Render
   }
 };
 

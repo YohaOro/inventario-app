@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: inventario-app-backend
+    env: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && gunicorn api:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.16
+    healthCheckPath: /api/health
+    autoDeploy: true
