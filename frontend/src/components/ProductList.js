@@ -60,7 +60,7 @@ const ProductList = React.memo(({
     setDeletingId(productId);
     
     try {
-      const result = await onDelete(productId);
+      await onDelete(productId);
       
       console.log('Producto eliminado exitosamente');
       
