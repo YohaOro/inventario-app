@@ -4,7 +4,7 @@ const config = {
     apiUrl: 'http://localhost:5001/api' // Backend Flask local
   },
   production: {
-    apiUrl: 'https://inventario-app-backend.onrender.com/api' // Backend Flask en Render
+    apiUrl: 'https://inventario-app-backend-4cnh.onrender.com/api' // Backend Flask en Render
   }
 };
 
