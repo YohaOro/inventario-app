@@ -1,0 +1,46 @@
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de desarrollo
+*.log
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Dependencias
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Archivos de build
+build/
+dist/
+*.egg-info/
+
+# Archivos de configuración local
+.env.example
+start.sh
+run_server.sh
+
+# Documentación
+README.md
+DEPLOY.md
+
+# Base de datos local
+inventario.db
+*.db
+*.sqlite
+*.sqlite3
+
+# Archivos temporales
+*.tmp
+*.temp
