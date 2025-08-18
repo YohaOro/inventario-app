@@ -167,11 +167,15 @@ graph TB
 ```
 inventario-app/
 ├── 🚀 Scripts de Inicio
-│   ├── start-app.sh        # Inicia toda la aplicación
-│   ├── stop-app.sh         # Detiene todos los servicios
-│   ├── quick-start.sh      # Inicio rápido con PM2
-│   ├── dev-start.sh        # Desarrollo básico
-│   └── watchman-start.sh   # Con Watchman
+│   ├── start.sh            # Script principal (punto de entrada)
+│   └── scripts/            # Carpeta de scripts organizados
+│       ├── start-app.sh    # Inicia toda la aplicación
+│       ├── stop-app.sh     # Detiene todos los servicios
+│       ├── quick-start.sh  # Inicio rápido con PM2
+│       ├── dev-start.sh    # Desarrollo básico
+│       ├── watchman-start.sh # Con Watchman
+│       ├── clean.sh        # Limpieza de archivos
+│       └── README.md       # Documentación de scripts
 ├── ⚙️ Backend (Flask)
 │   ├── api.py              # Servidor principal
 │   ├── init_db.py          # Inicialización de BD
@@ -186,8 +190,8 @@ inventario-app/
 │   └── images/             # Imágenes del proyecto
 ├── 📚 Documentación
 │   ├── SCRIPTS.md          # Guía de scripts
-│   ├── RENDER_SETUP.md     # Configuración Render
-│   └── DEVELOPMENT.md      # Guía de desarrollo
+│   ├── RENDER_SETUP.md     # Configuración Render (despliegue)
+│   └── DEVELOPMENT.md      # Guía de desarrollo local
 ├── 🚀 Despliegue
 │   ├── render.yaml         # Configuración Render
 │   ├── vercel.json         # Configuración Vercel
@@ -231,11 +235,14 @@ chmod +x start-app.sh stop-app.sh
 
 ### 🚀 **Inicio Rápido (Recomendado)**
 ```bash
-# Iniciar toda la aplicación en un comando
-npm start
+# Script principal (recomendado)
+./start.sh start      # Inicia aplicación
+./start.sh stop       # Detiene servicios
+./start.sh help       # Muestra ayuda
 
-# Detener toda la aplicación
-npm run stop
+# Comandos npm (alternativa)
+npm start             # Inicia aplicación
+npm run stop          # Detiene servicios
 ```
 
 ### 🔧 **Inicio Manual (Desarrollo)**
@@ -401,13 +408,14 @@ SOFTWARE.
 
 ### 📚 **Guías Detalladas**
 - **[SCRIPTS.md](SCRIPTS.md)** - Guía completa de todos los scripts disponibles
-- **[RENDER_SETUP.md](RENDER_SETUP.md)** - Configuración paso a paso para Render
-- **[DEVELOPMENT.md](DEVELOPMENT.md)** - Guía de desarrollo y contribución
+- **[RENDER_SETUP.md](RENDER_SETUP.md)** - Configuración paso a paso para Render (despliegue)
+- **[DEVELOPMENT.md](DEVELOPMENT.md)** - Guía de desarrollo local optimizado
 
 ### 🚀 **Scripts Principales**
-- **`start-app.sh`** - Inicia toda la aplicación en un comando
-- **`stop-app.sh`** - Detiene todos los servicios limpiamente
-- **`quick-start.sh`** - Inicio rápido con PM2 para desarrollo avanzado
+- **`start.sh`** - Script principal unificado (punto de entrada)
+- **`scripts/start-app.sh`** - Inicia toda la aplicación en un comando
+- **`scripts/stop-app.sh`** - Detiene todos los servicios limpiamente
+- **`scripts/quick-start.sh`** - Inicio rápido con PM2 para desarrollo avanzado
 
 ### 🔧 **Comandos NPM Disponibles**
 ```bash
