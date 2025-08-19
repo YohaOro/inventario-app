@@ -30,7 +30,6 @@ function SearchProduct({ products, initialSearchTerm = '', initialSearchBy = 'no
     setSearchResults(filtered);
   }, [searchTerm, searchBy, products]);
 
-  // Efecto para realizar búsqueda automática si hay término inicial
   useEffect(() => {
     if (initialSearchTerm) {
       handleSearch();

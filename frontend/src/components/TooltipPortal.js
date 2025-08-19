@@ -8,8 +8,6 @@ const TooltipPortal = ({ children, content, position = 'top' }) => {
   const containerRef = useRef(null);
 
   const showTooltip = () => {
-    console.log('Tooltip show:', content); // Debug
-    
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
       
@@ -59,11 +57,9 @@ const TooltipPortal = ({ children, content, position = 'top' }) => {
   };
   
   const hideTooltip = () => {
-    console.log('Tooltip hide:', content); // Debug
     setIsVisible(false);
   };
 
-  // Renderizar el tooltip usando Portal
   const renderTooltip = () => {
     if (!isVisible) return null;
 
@@ -74,7 +70,6 @@ const TooltipPortal = ({ children, content, position = 'top' }) => {
       </div>
     );
 
-    // Usar Portal para renderizar en el body
     return createPortal(tooltipElement, document.body);
   };
 

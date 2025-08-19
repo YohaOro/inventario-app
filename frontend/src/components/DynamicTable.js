@@ -19,7 +19,6 @@ const DynamicTable = ({
   const renderCellContent = (item, column) => {
     const value = item[column.key];
     
-    // Si la columna tiene un renderer personalizado, usarlo
     if (column.render) {
       return column.render(value, item);
     }
@@ -50,8 +49,6 @@ const DynamicTable = ({
         return value;
     }
   };
-
-
 
   // Función para manejar clic en fila
   const handleRowClick = (item) => {

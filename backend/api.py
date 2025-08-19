@@ -11,9 +11,8 @@ import os
 from datetime import datetime
 
 app = Flask(__name__)
-CORS(app)  # Permitir CORS para el frontend
+CORS(app)
 
-# Configuración de la base de datos SQLite
 DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'inventario.db')
 
 def get_db_connection():
@@ -32,7 +31,6 @@ def init_database():
         conn = get_db_connection()
         cursor = conn.cursor()
         
-        # Crear tabla de productos
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS productos (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,7 +43,6 @@ def init_database():
             )
         ''')
         
-        # Insertar productos de ejemplo de todas las categorías
         productos_ejemplo = [
             ('Laptop Dell XPS 13', 'Laptop ultrabook de 13 pulgadas', 5, 1299.99, 'Tecnología'),
             ('Mouse inalámbrico Logitech', 'Mouse ergonómico con sensor óptico', 15, 29.99, 'Accesorios'),
@@ -64,7 +61,6 @@ def init_database():
             ('Juguete para perro resistente', 'Pelota de goma para perros grandes', 45, 8.99, 'Mascotas')
         ]
         
-        # Insertar cada producto
         for producto in productos_ejemplo:
             cursor.execute('''
                 INSERT OR IGNORE INTO productos (nombre, descripcion, cantidad, precio, categoria)
@@ -74,7 +70,6 @@ def init_database():
         conn.commit()
         conn.close()
 
-# Inicializar base de datos al arrancar
 init_database()
 
 @app.route('/api/health', methods=['GET'])
@@ -93,7 +88,6 @@ def get_products():
         conn = get_db_connection()
         cursor = conn.cursor()
         
-        # Obtener todos los productos
         cursor.execute('''
             SELECT id, nombre, descripcion, cantidad, precio, categoria
             FROM productos
@@ -106,13 +100,14 @@ def get_products():
         return jsonify({
             'success': True,
             'data': products,
-            'count': len(products)
+            'message': f'Se encontraron {len(products)} productos'
         })
         
     except Exception as e:
         return jsonify({
             'success': False,
-            'error': str(e)
+            'error': str(e),
+            'message': 'Error al obtener productos'
         }), 500
 
 @app.route('/api/products/<int:product_id>', methods=['GET'])
@@ -154,7 +149,6 @@ def create_product():
     try:
         data = request.get_json()
         
-        # Validar datos requeridos
         required_fields = ['nombre', 'cantidad', 'precio', 'categoria']
         for field in required_fields:
             if not data.get(field):
@@ -163,7 +157,6 @@ def create_product():
                     'error': f'Campo requerido: {field}'
                 }), 400
         
-        # Validar tipos de datos
         try:
             cantidad = int(data['cantidad'])
             precio = float(data['precio'])
@@ -173,7 +166,6 @@ def create_product():
                 'error': 'Cantidad y precio deben ser números'
             }), 400
         
-        # Validar valores positivos
         if cantidad < 0 or precio < 0:
             return jsonify({
                 'success': False,
@@ -183,7 +175,6 @@ def create_product():
         conn = get_db_connection()
         cursor = conn.cursor()
         
-        # Insertar nuevo producto
         cursor.execute('''
             INSERT INTO productos (nombre, descripcion, cantidad, precio, categoria)
             VALUES (?, ?, ?, ?, ?)
@@ -199,7 +190,6 @@ def create_product():
         conn.commit()
         conn.close()
         
-        # Retornar el producto creado
         return jsonify({
             'success': True,
             'message': 'Producto creado exitosamente',
@@ -228,7 +218,6 @@ def update_product(product_id):
         conn = get_db_connection()
         cursor = conn.cursor()
         
-        # Verificar que el producto existe
         cursor.execute('SELECT * FROM productos WHERE id = ?', (product_id,))
         if not cursor.fetchone():
             conn.close()
@@ -237,7 +226,6 @@ def update_product(product_id):
                 'error': 'Producto no encontrado'
             }), 404
         
-        # Construir query de actualización dinámicamente
         update_fields = []
         update_values = []
         
@@ -296,7 +284,6 @@ def update_product(product_id):
                 'error': 'No se proporcionaron campos para actualizar'
             }), 400
         
-        # Ejecutar actualización
         update_values.append(product_id)
         query = f'UPDATE productos SET {", ".join(update_fields)} WHERE id = ?'
         cursor.execute(query, update_values)
@@ -322,7 +309,6 @@ def delete_product(product_id):
         conn = get_db_connection()
         cursor = conn.cursor()
         
-        # Verificar que el producto existe
         cursor.execute('SELECT * FROM productos WHERE id = ?', (product_id,))
         if not cursor.fetchone():
             conn.close()
@@ -331,7 +317,6 @@ def delete_product(product_id):
                 'error': 'Producto no encontrado'
             }), 404
         
-        # Eliminar producto
         cursor.execute('DELETE FROM productos WHERE id = ?', (product_id,))
         conn.commit()
         conn.close()
@@ -363,7 +348,6 @@ def search_products():
         conn = get_db_connection()
         cursor = conn.cursor()
         
-        # Construir query de búsqueda
         if search_by == 'categoria':
             sql = '''
                 SELECT id, nombre, descripcion, cantidad, precio, categoria
@@ -378,7 +362,7 @@ def search_products():
                 WHERE descripcion LIKE ?
                 ORDER BY nombre
             '''
-        else:  # búsqueda por nombre (por defecto)
+        else:
             sql = '''
                 SELECT id, nombre, descripcion, cantidad, precio, categoria
                 FROM productos
@@ -443,19 +427,15 @@ def get_statistics():
         conn = get_db_connection()
         cursor = conn.cursor()
         
-        # Total de productos
         cursor.execute('SELECT COUNT(*) FROM productos')
         total_products = cursor.fetchone()[0]
         
-        # Valor total del inventario
         cursor.execute('SELECT SUM(cantidad * precio) FROM productos')
         total_value = cursor.fetchone()[0] or 0
         
-        # Productos con bajo stock
         cursor.execute('SELECT COUNT(*) FROM productos WHERE cantidad < 10')
         low_stock_count = cursor.fetchone()[0]
         
-        # Categorías
         cursor.execute('SELECT categoria, COUNT(*) FROM productos GROUP BY categoria')
         categories = dict(cursor.fetchall())
         
@@ -478,12 +458,10 @@ def get_statistics():
             'error': str(e)
         }), 500
 
-# Configuración de assets estáticos
 @app.route('/assets/<path:filename>')
 def serve_asset(filename):
     """Sirve archivos estáticos desde la carpeta assets"""
     try:
-        # Ruta desde el directorio backend hacia la carpeta assets
         assets_path = os.path.join(os.path.dirname(__file__), '..', 'assets')
         print(f"🔍 Buscando asset: {filename} en {assets_path}")
         return send_from_directory(assets_path, filename)
@@ -494,7 +472,6 @@ def serve_asset(filename):
 def serve_icon(filename):
     """Sirve iconos específicamente"""
     try:
-        # Ruta desde el directorio backend hacia la carpeta assets/icons
         icons_path = os.path.join(os.path.dirname(__file__), '..', 'assets', 'icons')
         print(f"🔍 Buscando icono: {filename} en {icons_path}")
         return send_from_directory(icons_path, filename)
@@ -505,7 +482,6 @@ def serve_icon(filename):
 def serve_image(filename):
     """Sirve imágenes específicamente"""
     try:
-        # Ruta desde el directorio backend hacia la carpeta assets/images
         images_path = os.path.join(os.path.dirname(__file__), '..', 'assets', 'images')
         print(f"🔍 Buscando imagen: {filename} en {images_path}")
         return send_from_directory(images_path, filename)

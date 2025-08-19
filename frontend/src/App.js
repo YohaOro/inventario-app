@@ -16,14 +16,11 @@ function App() {
   const [error, setError] = useState(null);
   const [statistics, setStatistics] = useState(null);
   
-  // Estado de paginación
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(10);
   
-  // Estado para búsqueda desde descripción truncada
   const [searchFromDescription, setSearchFromDescription] = useState({ term: '', by: 'nombre' });
 
-  // Cargar productos desde la API
   useEffect(() => {
     loadProducts();
     loadStatistics();
@@ -52,12 +49,10 @@ function App() {
     }
   };
 
-  // Función para obtener productos paginados
   const getPaginatedProducts = () => {
     const startIndex = (currentPage - 1) * productsPerPage;
     const endIndex = startIndex + productsPerPage;
     
-    // Ordenar productos alfabéticamente por nombre
     const sortedProducts = [...products].sort((a, b) => 
       a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })
     );
@@ -65,18 +60,15 @@ function App() {
     return sortedProducts.slice(startIndex, endIndex);
   };
 
-  // Función para ir a la página anterior
   const goToPreviousPage = () => {
     setCurrentPage(prev => Math.max(prev - 1, 1));
   };
 
-  // Función para ir a la página siguiente
   const goToNextPage = () => {
     const maxPage = Math.ceil(products.length / productsPerPage);
     setCurrentPage(prev => Math.min(prev + 1, maxPage));
   };
 
-  // Función para ir a una página específica
   const goToPage = (pageNumber) => {
     const maxPage = Math.ceil(products.length / productsPerPage);
     if (pageNumber >= 1 && pageNumber <= maxPage) {
@@ -84,7 +76,6 @@ function App() {
     }
   };
 
-  // Función para resetear paginación
   const resetPagination = () => {
     setCurrentPage(1);
   };
@@ -93,9 +84,9 @@ function App() {
     try {
       setLoading(true);
       const response = await apiService.createProduct(newProduct);
-      await loadProducts(); // Recargar productos
-      await loadStatistics(); // Recargar estadísticas
-      resetPagination(); // Resetear paginación
+      await loadProducts();
+      await loadStatistics();
+      resetPagination();
       setActiveTab('list');
       return { success: true, message: response.message };
     } catch (err) {
@@ -110,9 +101,9 @@ function App() {
       setLoading(true);
       const { id, ...updateData } = updatedProduct;
       await apiService.updateProduct(id, updateData);
-      await loadProducts(); // Recargar productos
-      await loadStatistics(); // Recargar estadísticas
-      resetPagination(); // Resetear paginación
+      await loadProducts();
+      await loadStatistics();
+      resetPagination();
       setEditingProduct(null);
       setActiveTab('list');
       return { success: true, message: 'Producto actualizado exitosamente' };
@@ -127,9 +118,9 @@ function App() {
     try {
       setLoading(true);
       await apiService.deleteProduct(id);
-      await loadProducts(); // Recargar productos
-      await loadStatistics(); // Recargar estadísticas
-      resetPagination(); // Resetear paginación
+      await loadProducts();
+      await loadStatistics();
+      resetPagination();
       return { success: true, message: 'Producto eliminado exitosamente' };
     } catch (err) {
       return { success: false, message: 'Error al eliminar producto: ' + err.message };
@@ -143,7 +134,6 @@ function App() {
     setActiveTab('edit');
   };
 
-  // Función para buscar producto desde descripción truncada
   const searchProductFromDescription = (productName) => {
     setSearchFromDescription({ term: productName, by: 'nombre' });
     setActiveTab('search');

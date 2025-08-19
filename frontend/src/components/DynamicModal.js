@@ -4,7 +4,7 @@ import './DynamicModal.css';
 const DynamicModal = ({ 
   isOpen, 
   onClose, 
-  type = 'default', // 'description', 'delete-confirmation', 'success'
+  type = 'default',
   title,
   content,
   actions,

@@ -16,12 +16,6 @@ const ProductList = React.memo(({
   onGoToPage,
   onSearchProduct
 }) => {
-  console.log('ProductList renderizado con', products?.length, 'productos');
-  
-  // Debug: Monitorear re-renders
-  useEffect(() => {
-    console.log('ProductList se montó/re-renderizó');
-  });
   const [deletingId, setDeletingId] = useState(null);
   const [message, setMessage] = useState(null);
   const [descriptionModal, setDescriptionModal] = useState({ isOpen: false, description: '', productName: '' });
@@ -33,16 +27,9 @@ const ProductList = React.memo(({
   });
 
   const handleDelete = async (product) => {
-    console.log('=== handleDelete INICIADO ===');
-    console.log('Producto recibido:', product);
-    
     const productId = product.id;
     const productName = product.nombre;
     
-    console.log('ID extraído:', productId);
-    console.log('Nombre extraído:', productName);
-    
-    // Solo abrir modal de confirmación
     const newModalState = {
       isOpen: true,
       productId: productId,
@@ -50,9 +37,7 @@ const ProductList = React.memo(({
       showSuccess: false
     };
     
-    console.log('Estableciendo modal state:', newModalState);
     setDeleteModal(newModalState);
-    console.log('=== handleDelete COMPLETADO ===');
   };
 
   const confirmDelete = async () => {
@@ -62,9 +47,6 @@ const ProductList = React.memo(({
     try {
       await onDelete(productId);
       
-      console.log('Producto eliminado exitosamente');
-      
-      // Cerrar modal y mostrar mensaje de éxito
       setDeleteModal({ isOpen: false, productId: null, productName: '', showSuccess: false });
       setMessage({ success: true, message: `Producto "${deleteModal.productName}" eliminado exitosamente` });
       setTimeout(() => setMessage(null), 3000);
@@ -79,17 +61,9 @@ const ProductList = React.memo(({
   };
 
   const closeDeleteModal = () => {
-    console.log('closeDeleteModal llamado');
     setDeleteModal({ isOpen: false, productId: null, productName: '', showSuccess: false });
     setDeletingId(null);
   };
-
-
-
-  // Debug: Monitorear cambios en deleteModal
-  useEffect(() => {
-    console.log('deleteModal state cambió:', deleteModal);
-  }, [deleteModal]);
 
   if (!products || products.length === 0) {
     return (
@@ -149,7 +123,6 @@ const ProductList = React.memo(({
         </div>
       )}
       
-      {/* NUEVA TABLA DINÁMICA */}
       <DynamicTable
         data={products}
         columns={[
@@ -195,7 +168,6 @@ const ProductList = React.memo(({
             type: 'quantity',
             width: '10%',
             render: (value, item) => {
-              // Usar el mismo sistema de colores que LowStockReport
               let stockClass = 'normal-stock';
               if (value === 0) stockClass = 'no-stock';
               else if (value <= 3) stockClass = 'critical';
@@ -229,12 +201,8 @@ const ProductList = React.memo(({
         className="products-table"
       />
       
-      {/* Información de paginación */}
       <div className="pagination-info">
-        
-        {/* Controles de paginación */}
         <div className="pagination-controls">
-          {/* Botón Anterior */}
           <button 
             className="btn btn-secondary pagination-btn"
             onClick={onPreviousPage}
@@ -243,13 +211,11 @@ const ProductList = React.memo(({
             ⬅️ Anterior
           </button>
           
-          {/* Números de página */}
           <div className="page-numbers">
             {(() => {
               const totalPages = Math.ceil(totalProducts / productsPerPage);
               const pages = [];
               
-              // Mostrar primera página
               if (currentPage > 1) {
                 pages.push(
                   <button 
@@ -266,7 +232,6 @@ const ProductList = React.memo(({
                 }
               }
               
-              // Mostrar páginas alrededor de la actual
               for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
                 if (i === 1 || i === totalPages) continue;
                 pages.push(
@@ -280,7 +245,6 @@ const ProductList = React.memo(({
                 );
               }
               
-              // Mostrar última página
               if (currentPage < totalPages) {
                 if (currentPage < totalPages - 2) {
                   pages.push(<span key="dots2" className="page-dots">...</span>);
@@ -301,7 +265,6 @@ const ProductList = React.memo(({
             })()}
           </div>
           
-          {/* Botón Siguiente */}
           <button 
             className="btn btn-secondary pagination-btn"
             onClick={onNextPage}
@@ -312,7 +275,6 @@ const ProductList = React.memo(({
         </div>
       </div>
       
-      {/* Modal de Descripción */}
       <DynamicModal
         type="description"
         isOpen={descriptionModal.isOpen}
@@ -320,7 +282,6 @@ const ProductList = React.memo(({
         content={descriptionModal.description}
       />
 
-      {/* Modal de Confirmación de Eliminación */}
       <DynamicModal
         type="delete-confirmation"
         isOpen={deleteModal.isOpen}

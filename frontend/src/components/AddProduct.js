@@ -20,7 +20,6 @@ function AddProduct({ onAdd }) {
       [name]: value
     }));
     
-    // Limpiar error del campo
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -62,7 +61,6 @@ function AddProduct({ onAdd }) {
         setMessage(result);
         
         if (result.success) {
-          // Limpiar formulario solo si fue exitoso
           setFormData({
             nombre: '',
             descripcion: '',
@@ -72,7 +70,6 @@ function AddProduct({ onAdd }) {
           });
         }
         
-        // Limpiar mensaje después de 3 segundos
         setTimeout(() => setMessage(null), 3000);
       } catch (error) {
         setMessage({ success: false, message: 'Error inesperado: ' + error.message });

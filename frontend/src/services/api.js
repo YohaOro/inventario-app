@@ -1,8 +1,6 @@
-// Servicio para conectar con la API REST del backend
 import { API_BASE_URL } from '../config/api.js';
 
 class ApiService {
-  // Método genérico para hacer peticiones HTTP
   async request(endpoint, options = {}) {
     const url = `${API_BASE_URL}${endpoint}`;
     const config = {
@@ -28,17 +26,14 @@ class ApiService {
     }
   }
 
-  // Obtener todos los productos
   async getProducts() {
     return this.request('/products');
   }
 
-  // Obtener un producto por ID
   async getProduct(id) {
     return this.request(`/products/${id}`);
   }
 
-  // Crear un nuevo producto
   async createProduct(productData) {
     return this.request('/products', {
       method: 'POST',
@@ -46,7 +41,6 @@ class ApiService {
     });
   }
 
-  // Actualizar un producto existente
   async updateProduct(id, productData) {
     return this.request(`/products/${id}`, {
       method: 'PUT',
@@ -54,14 +48,12 @@ class ApiService {
     });
   }
 
-  // Eliminar un producto
   async deleteProduct(id) {
     return this.request(`/products/${id}`, {
       method: 'DELETE',
     });
   }
 
-  // Buscar productos
   async searchProducts(query, searchBy = 'nombre') {
     const params = new URLSearchParams({
       q: query,
@@ -70,17 +62,14 @@ class ApiService {
     return this.request(`/products/search?${params}`);
   }
 
-  // Obtener productos con bajo stock
   async getLowStockProducts(threshold = 10) {
     return this.request(`/products/low-stock?threshold=${threshold}`);
   }
 
-  // Obtener estadísticas del inventario
   async getStatistics() {
     return this.request('/statistics');
   }
 
-  // Verificar estado de la API
   async healthCheck() {
     return this.request('/health');
   }
